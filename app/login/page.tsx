@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -66,6 +67,9 @@ export default function LoginPage() {
             Log In
           </button>
         </form>
+        <p className="text-center text-gray-600">
+          New user? <Link href="/signup" className="text-blue-500 hover:underline">Sign up here</Link>
+        </p>
       </div>
     </div>
   );

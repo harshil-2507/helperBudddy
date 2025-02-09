@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import VerifyOTPForm from '@/app/(components)/VerifyOTPForm';
 
 export default function SignupPage() {
@@ -90,6 +91,9 @@ export default function SignupPage() {
         ) : (
           <VerifyOTPForm email={formData.email} />
         )}
+        <p className="text-center text-gray-600">
+          Already have an account? <Link href="/login" className="text-blue-500 hover:underline">Login here</Link>
+        </p>
       </div>
     </div>
   );
