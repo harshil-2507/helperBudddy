@@ -62,6 +62,21 @@ export default function UsersPage() {
     }
   }
 
+  const deleteUser = async (_id: string) => {
+    try {
+      const response = await fetch(`/api/admin/users/${_id}`, {
+        method: "DELETE",
+      })
+      if (!response.ok) {
+        throw new Error("Failed to delete user")
+      }
+      setUsers(users.filter((user) => user._id !== _id))
+      toast.success("User deleted successfully")
+    } catch (error) {
+      console.error("Failed to delete user:", error)
+      toast.error("Failed to delete user")
+    }
+  }
   const toggleUserVerification = async (_id: string, currentStatus: boolean) => {
     try {
       const response = await fetch(`/api/admin/users/${_id}`, {
@@ -187,6 +202,9 @@ export default function UsersPage() {
                 }}>
                   View Services
                 </Button>
+                <button onClick={() => deleteUser(user._id)} className="ml-2 hover:opacity-70 transition-opacity">
+                 Delete
+                </button>
               </TableCell>
             </TableRow>
           ))}
