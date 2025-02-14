@@ -27,10 +27,14 @@ export default function LoginPage() {
       })
 
       const data = await response.json()
+      console.log("data is : ", data);
 
       if (response.ok) {
         // Store token in cookie
-        Cookies.set("token", data.token, { expires: 1 })
+        Cookies.set("token", data.token, { expires: 1 });
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data._id);
+        console.log("id is : ", data._id);
         // Redirect to user's dashboard using their MongoDB _id
         router.push(`/user/${data._id}`)
       } else {
