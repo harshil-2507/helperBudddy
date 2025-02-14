@@ -8,26 +8,26 @@ import { X } from "lucide-react"
 
 // Dummy data for services and sub-services
 const services = [
-  {
-    id: 1,
-    title: "Women's Salon & Spa",
-    icon: "/placeholder.svg?height=100&width=100",
-    subServices: [
-      { title: "Hair Styling", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Facial", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Manicure & Pedicure", icon: "/placeholder.svg?height=80&width=80" },
-    ],
-  },
-  {
-    id: 2,
-    title: "Men's Salon & Massage",
-    icon: "/placeholder.svg?height=100&width=100",
-    subServices: [
-      { title: "Haircut", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Beard Grooming", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Massage", icon: "/placeholder.svg?height=80&width=80" },
-    ],
-  },
+  // {
+  //   id: 1,
+  //   title: "Women's Salon & Spa",
+  //   icon: "/placeholder.svg?height=100&width=100",
+  //   subServices: [
+  //     { title: "Hair Styling", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Facial", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Manicure & Pedicure", icon: "/placeholder.svg?height=80&width=80" },
+  //   ],
+  // },
+  // {
+  //   id: 2,
+  //   title: "Men's Salon & Massage",
+  //   icon: "/placeholder.svg?height=100&width=100",
+  //   subServices: [
+  //     { title: "Haircut", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Beard Grooming", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Massage", icon: "/placeholder.svg?height=80&width=80" },
+  //   ],
+  // },
   {
     id: 3,
     title: "AC & Appliance Repair",
@@ -68,26 +68,26 @@ const services = [
       { title: "Maintenance", icon: "/placeholder.svg?height=80&width=80" },
     ],
   },
-  {
-    id: 7,
-    title: "Native Smart Locks",
-    icon: "/placeholder.svg?height=100&width=100",
-    subServices: [
-      { title: "Installation", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Repair", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Upgrade", icon: "/placeholder.svg?height=80&width=80" },
-    ],
-  },
-  {
-    id: 8,
-    title: "Full home painting",
-    icon: "/placeholder.svg?height=100&width=100",
-    subServices: [
-      { title: "Interior Painting", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Exterior Painting", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Wall Textures", icon: "/placeholder.svg?height=80&width=80" },
-    ],
-  },
+  // {
+  //   id: 7,
+  //   title: "Native Smart Locks",
+  //   icon: "/placeholder.svg?height=100&width=100",
+  //   subServices: [
+  //     { title: "Installation", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Repair", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Upgrade", icon: "/placeholder.svg?height=80&width=80" },
+  //   ],
+  // },
+  // {
+  //   id: 8,
+  //   title: "Full home painting",
+  //   icon: "/placeholder.svg?height=100&width=100",
+  //   subServices: [
+  //     { title: "Interior Painting", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Exterior Painting", icon: "/placeholder.svg?height=80&width=80" },
+  //     { title: "Wall Textures", icon: "/placeholder.svg?height=80&width=80" },
+  //   ],
+  // },
 ]
 
 export default function ServicesGrid() {

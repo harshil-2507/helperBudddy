@@ -4,13 +4,15 @@ import bcrypt from 'bcryptjs';
 
 // Define the User document interface
 export interface IUser extends Document {
+  _id : mongoose.Types.ObjectId;
   username: string;
   email: string;
   password: string;
   area: string;
   isVerified: boolean;
-  otp?: string; // Optional field
-  otpExpires?: Date; // Optional field
+  otp?: string;
+  otpExpires?: Date;
+  interestedCategory?: string[]; // Add this line
   matchPassword: (enteredPassword: string) => Promise<boolean>;
 }
 
@@ -24,6 +26,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     isVerified: { type: Boolean, default: false },
     otp: { type: String }, // For email verification
     otpExpires: { type: Date }, // OTP expiration time
+    interestedCategory: { type: [String], default: [] }, // Add this line
   },
   { timestamps: true }
 );
@@ -43,4 +46,8 @@ userSchema.methods.matchPassword = async function (enteredPassword: string): Pro
 
 // Check if the model already exists
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
+
+// Add this line to export the IUser interface as a type
+export type User = IUser;
+
 export default User;
