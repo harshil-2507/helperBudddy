@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { connect } from "@/lib/mongodb"
 import Service from "@/app/models/services"
 
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -24,6 +25,8 @@ export async function GET(
     const transformedServices = services.map(service => ({
       _id: service._id.toString(),
       name: service.title,
+      description: service.description,
+      images: service.images,
       isApproved: service.isApproved
     }))
     
