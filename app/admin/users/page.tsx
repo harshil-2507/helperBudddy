@@ -1,83 +1,104 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { CheckCircle, XCircle } from "lucide-react"
-import { toast } from "react-hot-toast"
+import { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { CheckCircle, XCircle } from "lucide-react";
+import { toast } from "react-hot-toast";
+import Image from "next/image";
 
 interface Service {
-  _id: string
-  name: string
-  isApproved: boolean
+  _id: string;
+  name: string;
+  isApproved: boolean;
+  description: string;
+  images: string[];
 }
 
 interface User {
-  _id: string
-  fullName: string
-  email: string
-  isApproved: boolean
+  _id: string;
+  fullName: string;
+  email: string;
+  isApproved: boolean;
 }
 
 export default function UsersPage() {
-  const [users, setUsers] = useState<User[]>([])
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [userServices, setUserServices] = useState<Service[]>([])
-  const [isUserDialogOpen, setIsUserDialogOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [userServices, setUserServices] = useState<Service[]>([]);
+  const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    fetchUsers();
+  }, []);
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("/api/admin/users")
-      const data = await response.json()
-      setUsers(data)
+      const response = await fetch("/api/admin/users");
+      const data = await response.json();
+      setUsers(data);
     } catch (error) {
-      console.error("Failed to fetch users:", error)
-      alert("Failed to fetch users")
+      console.error("Failed to fetch users:", error);
+      toast.error("Failed to fetch users");
     }
-  }
+  };
 
   const fetchUserServices = async (id: string) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await fetch(`/api/admin/users/services/${id}`)
-      const data = await response.json()
-      console.log("Fetched services:", data)
+      const response = await fetch(`/api/admin/users/services/${id}`);
+      const data = await response.json();
+      console.log("Fetched services:", data);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch user services: ${response.statusText}`)
+        throw new Error(
+          `Failed to fetch user services: ${response.statusText}`
+        );
       }
 
-      setUserServices(data)
+      setUserServices(data);
     } catch (error) {
-      console.error("Failed to fetch user services:", error)
-      toast.error("Failed to fetch user services")
+      console.error("Failed to fetch user services:", error);
+      toast.error("Failed to fetch user services");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const deleteUser = async (_id: string) => {
     try {
       const response = await fetch(`/api/admin/users/${_id}`, {
         method: "DELETE",
-      })
+      });
       if (!response.ok) {
-        throw new Error("Failed to delete user")
+        throw new Error("Failed to delete user");
       }
-      setUsers(users.filter((user) => user._id !== _id))
-      toast.success("User deleted successfully")
+      setUsers(users.filter((user) => user._id !== _id));
+      toast.success("User deleted successfully");
     } catch (error) {
-      console.error("Failed to delete user:", error)
-      toast.error("Failed to delete user")
+      console.error("Failed to delete user:", error);
+      toast.error("Failed to delete user");
     }
-  }
-  const toggleUserVerification = async (_id: string, currentStatus: boolean) => {
+  };
+
+  const toggleUserVerification = async (
+    _id: string,
+    currentStatus: boolean
+  ) => {
     try {
       const response = await fetch(`/api/admin/users/${_id}`, {
         method: "PATCH",
@@ -85,44 +106,55 @@ export default function UsersPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ isApproved: !currentStatus }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to update approval status")
+        throw new Error("Failed to update approval status");
       }
 
-      const data = await response.json()
-      console.log("User approval updated:", data)
+      const data = await response.json();
+      console.log("User approval updated:", data);
 
-      setUsers(users.map((user) => (user._id === _id ? { ...user, isApproved: !currentStatus } : user)))
+      setUsers(
+        users.map((user) =>
+          user._id === _id ? { ...user, isApproved: !currentStatus } : user
+        )
+      );
 
       if (!currentStatus) {
-        const emailResponse = await fetch("/api/admin/send-verification-email", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId: _id }),
-        })
+        const emailResponse = await fetch(
+          "/api/admin/send-verification-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId: _id }),
+          }
+        );
 
         if (emailResponse.ok) {
-          toast.success("Verification email sent successfully")
+          toast.success("Verification email sent successfully");
         } else {
-          toast.error("Failed to send verification email")
+          toast.error("Failed to send verification email");
         }
       }
     } catch (error) {
-      console.error("Error updating user approval:", error)
-      alert("Failed to update user approval")
+      console.error("Error updating user approval:", error);
+      toast.error("Failed to update user approval");
     }
-  }
+  };
 
-  const toggleServiceVerification = async (_id: string, currentStatus: boolean, uid?: string) => {
+  const toggleServiceVerification = async (
+    _id: string,
+    currentStatus: boolean,
+    uid?: string
+  ) => {
     if (!uid) {
-      toast.error("User ID not found")
-      return
+      toast.error("User ID not found");
+      return;
     }
-  
+
     try {
       const response = await fetch(`/api/admin/users/services/${_id}`, {
         method: "PATCH",
@@ -130,42 +162,49 @@ export default function UsersPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ isApproved: !currentStatus }),
-      })
-  
+      });
+
       if (!response.ok) {
-        throw new Error("Failed to update service verification status")
+        throw new Error("Failed to update service verification status");
       }
-  
-      const data = await response.json()
-      console.log("Service approval updated:", data)
-  
-      setUserServices(userServices.map((service) =>
-        service._id === _id ? { ...service, isApproved: !currentStatus } : service
-      ))
-  
+
+      const data = await response.json();
+      console.log("Service approval updated:", data);
+
+      setUserServices(
+        userServices.map((service) =>
+          service._id === _id
+            ? { ...service, isApproved: !currentStatus }
+            : service
+        )
+      );
+
       if (!currentStatus) {
-        const emailResponse = await fetch("/api/admin/send-serviceverification-email", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ 
-            serviceId: _id, 
-            WorkerId: uid 
-          }),
-        })
-        
+        const emailResponse = await fetch(
+          "/api/admin/send-serviceverification-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              serviceId: _id,
+              WorkerId: uid,
+            }),
+          }
+        );
+
         if (!emailResponse.ok) {
-          throw new Error("Failed to send service verification email")
+          throw new Error("Failed to send service verification email");
         }
-        
-        toast.success("Service verification email sent successfully")
+
+        toast.success("Service verification email sent successfully");
       }
     } catch (error) {
-      console.error("Error:", error)
-      toast.error(error instanceof Error ? error.message : "An error occurred")
+      console.error("Error:", error);
+      toast.error(error instanceof Error ? error.message : "An error occurred");
     }
-  }
+  };
 
   return (
     <div className="container mx-auto py-10">
@@ -185,8 +224,12 @@ export default function UsersPage() {
               <TableCell>{user.fullName}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                <button onClick={() => toggleUserVerification(user._id, user.isApproved)}
-                  className="hover:opacity-70 transition-opacity">
+                <button
+                  onClick={() =>
+                    toggleUserVerification(user._id, user.isApproved)
+                  }
+                  className="hover:opacity-70 transition-opacity"
+                >
                   {user.isApproved ? (
                     <CheckCircle className="text-green-500 h-5 w-5 cursor-pointer" />
                   ) : (
@@ -194,17 +237,25 @@ export default function UsersPage() {
                   )}
                 </button>
               </TableCell>
-              <TableCell>
-                <Button variant="outline" size="sm" onClick={() => {
-                  setSelectedUser(user)
-                  fetchUserServices(user._id)
-                  setIsUserDialogOpen(true)
-                }}>
+              <TableCell className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedUser(user);
+                    fetchUserServices(user._id);
+                    setIsUserDialogOpen(true);
+                  }}
+                >
                   View Services
                 </Button>
-                <button onClick={() => deleteUser(user._id)} className="ml-2 hover:opacity-70 transition-opacity">
-                 Delete
-                </button>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => deleteUser(user._id)}
+                >
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -212,7 +263,7 @@ export default function UsersPage() {
       </Table>
 
       <Dialog open={isUserDialogOpen} onOpenChange={setIsUserDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{selectedUser?.fullName}'s Services</DialogTitle>
           </DialogHeader>
@@ -225,6 +276,8 @@ export default function UsersPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Service Name</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Images</TableHead>
                   <TableHead>Service Verified</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -233,9 +286,44 @@ export default function UsersPage() {
                 {userServices.map((service) => (
                   <TableRow key={service._id}>
                     <TableCell>{service.name}</TableCell>
+                    <TableCell className="max-w-xs">
+                      <p className="truncate" title={service.description}>
+                        {service.description}
+                      </p>
+                    </TableCell>
                     <TableCell>
-                      <button onClick={() => toggleServiceVerification(service._id, service.isApproved, selectedUser?._id)}
-                        className="hover:opacity-70 transition-opacity">
+                      {service.images && service.images.length > 0 ? (
+                        <div className="flex gap-2">
+                          {service.images.map((image, index) => (
+                            <div key={index} className="relative w-16 h-16">
+                              <Image
+                                src={image}
+                                alt={`${service.name} image ${index + 1}`}
+                                fill
+                                className="object-cover rounded-md cursor-pointer hover:opacity-80"
+                                onClick={() => window.open(image, "_blank")}
+                                sizes="(max-width: 64px) 100vw, 64px"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-muted-foreground italic">
+                          No images available
+                        </p>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <button
+                        onClick={() =>
+                          toggleServiceVerification(
+                            service._id,
+                            service.isApproved,
+                            selectedUser?._id
+                          )
+                        }
+                        className="hover:opacity-70 transition-opacity"
+                      >
                         {service.isApproved ? (
                           <CheckCircle className="text-green-500 h-5 w-5 cursor-pointer" />
                         ) : (
@@ -244,8 +332,17 @@ export default function UsersPage() {
                       </button>
                     </TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm"
-                        onClick={() => toggleServiceVerification(service._id, service.isApproved, selectedUser?._id)}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          toggleServiceVerification(
+                            service._id,
+                            service.isApproved,
+                            selectedUser?._id
+                          )
+                        }
+                      >
                         {service.isApproved ? "Unverify" : "Verify"} Service
                       </Button>
                     </TableCell>
@@ -257,5 +354,5 @@ export default function UsersPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
