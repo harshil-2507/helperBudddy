@@ -4,35 +4,36 @@ import connectDB from '../../../../lib/dbConnect';
 import User from '../../../../models/User';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 
 export async function POST(request: Request) {
-  const { username, email, password, area }: { username: string; email: string; password: string; area: string } =
-    await request.json();
+  const { username, email, password, area } = await request.json();
 
   try {
     await connectDB();
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) return NextResponse.json({ message: 'User already exists' }, { status: 400 });
 
-    // Generate OTP
     const otp = crypto.randomBytes(3).toString('hex').toUpperCase();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    // Save user with OTP
+    // Generate a unique referral code
+    const referralCodeGenerated = crypto.randomBytes(10).toString('hex').toUpperCase();
+
+    // Create user with plain text password; pre-save hook will hash it
     const user = new User({
       username,
       email,
-      password,
+      password, // Plain text password
       area,
       otp,
       otpExpires,
+      walletCoins: 20, // Initial wallet coins
+      referralCode: referralCodeGenerated,
     });
     await user.save();
 
-    // Send OTP via email
+    // Send OTP email
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

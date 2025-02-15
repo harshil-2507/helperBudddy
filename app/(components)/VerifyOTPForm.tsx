@@ -7,9 +7,10 @@ import { useAuth } from '@/context/AuthContext';
 
 interface VerifyOTPFormProps {
   email: string;
+  referralCode?: string; // Add referralCode prop
 }
 
-export default function VerifyOTPForm({ email }: VerifyOTPFormProps) {
+export default function VerifyOTPForm({ email, referralCode }: VerifyOTPFormProps) {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -36,7 +37,7 @@ export default function VerifyOTPForm({ email }: VerifyOTPFormProps) {
       const response = await fetch('/api/auth/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp: otp.join('') }),
+        body: JSON.stringify({ email, otp: otp.join(''), referralCode }), // Include referralCode in the request
       });
 
       const data = await response.json();
@@ -48,7 +49,7 @@ export default function VerifyOTPForm({ email }: VerifyOTPFormProps) {
 
         login(); // Update global authentication state
         setSuccess(true);
-        router.push('/dashboard'); // Redirect to dashboard
+        router.push('/login'); // Redirect to dashboard
       } else {
         setError(data.message || 'Invalid OTP');
       }

@@ -5,7 +5,7 @@ import User from '../../../../models/User';
 import jwt from 'jsonwebtoken';
 
 export async function POST(request: Request) {
-  const { email, otp }: { email: string; otp: string } = await request.json();
+  const { email, otp, referralCode }: { email: string; otp: string; referralCode?: string } = await request.json();
 
   try {
     await connectDB();
@@ -27,6 +27,15 @@ export async function POST(request: Request) {
 
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: '1d' });
+
+    // If referral code is provided, add bonus coins to the referee
+    if (referralCode) {
+      const referee = await User.findOne({ referralCode });
+      if (referee) {
+        referee.walletCoins += 30; // Add bonus coins
+        await referee.save();
+      }
+    }
 
     return NextResponse.json({ message: 'Email verified successfully', token }, { status: 200 });
   } catch (error) {

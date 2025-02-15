@@ -1,19 +1,20 @@
-"use client"
-
-import { useState } from "react"
-import type { IUser } from "@/models/User"
-import { UserInfo } from "./user-info"
-import { UserOrders } from "./user-orders"
-import { UserRecommendations } from "./user-recommendations"
-import { UserSidebar } from "./user-sidebar"
-import { Button } from "../ui/button"
+// app/(auth)/user-dashboard.tsx
+"use client";
+import { useState } from "react";
+import type { IUser } from "@/models/User";
+import { UserInfo } from "./user-info";
+import { UserOrders } from "./user-orders";
+import { UserRecommendations } from "./user-recommendations";
+import { UserSidebar } from "./user-sidebar";
+import { Button } from "../ui/button";
+import Referral from "@/app/(components)/Referral";
 
 interface UserDashboardProps {
-  user: IUser
+  user: IUser;
 }
 
 export function UserDashboard({ user }: UserDashboardProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,12 +33,12 @@ export function UserDashboard({ user }: UserDashboardProps) {
 
       <main className="container grid gap-6 px-4 py-6 md:grid-cols-2 lg:grid-cols-3">
         <UserInfo user={user} className="lg:col-span-2" />
+        <Referral user={user} className="lg:col-span-1" />
         {/* <UserOrders orders={user.orders} />
         <UserRecommendations categories={user.interestedCategory} className="lg:col-span-3" /> */}
       </main>
 
       <UserSidebar user={user} open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </div>
-  )
+  );
 }
-
