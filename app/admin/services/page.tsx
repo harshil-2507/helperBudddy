@@ -209,7 +209,7 @@ export default function ServicesPage() {
             <TableRow key={service._id}>
               <TableCell>{service.name}</TableCell>
               <TableCell>{service.category}</TableCell>
-              <TableCell>${service.price}</TableCell>
+              <TableCell> ₹ {service.price}</TableCell>
               <TableCell>
                 <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                   <DialogTrigger asChild>

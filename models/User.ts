@@ -1,4 +1,3 @@
-// models/User.ts
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -8,14 +7,15 @@ export interface IUser extends Document {
   email: string;
   password: string;
   area: string;
+  address: string;
   isVerified: boolean;
   otp?: string;
   otpExpires?: Date;
   interestedCategory?: string[];
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
-  walletCoins: number; // Add this field
-  referralCode?: string; // Add this field
+  walletCoins: number;
+  referralCode?: string;
   matchPassword: (enteredPassword: string) => Promise<boolean>;
 }
 
@@ -25,31 +25,35 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     area: { type: String, required: true },
+    address: { type: String, maxlength: 200 },
     isVerified: { type: Boolean, default: false },
     otp: { type: String },
     otpExpires: { type: Date },
     interestedCategory: { type: [String], default: [] },
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date },
-    walletCoins: { type: Number, default: 0 }, // Initialize with 0
-    referralCode: { type: String }, // Optional field
+    walletCoins: { type: Number, default: 0 },
+    referralCode: { type: String },
   },
   { timestamps: true }
 );
 
-userSchema.pre<IUser>('save', async function (next) {
+// Add password hashing middleware
+userSchema.pre<IUser>('save', async function(next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-userSchema.methods.matchPassword = async function (enteredPassword: string): Promise<boolean> {
+// Add password matching method
+userSchema.methods.matchPassword = async function(enteredPassword: string): Promise<boolean> {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// Export the User model
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
-export type User = IUser;
+export type UserType = IUser;
 
 export default User;
