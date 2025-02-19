@@ -22,7 +22,7 @@ export default function AdminDashboard() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">$45,231.89</div>
+          <div className="text-2xl font-bold"> ₹10,200.89</div>
           <p className="text-xs text-muted-foreground">+20.1% from last month</p>
         </CardContent>
       </Card>
@@ -45,8 +45,8 @@ export default function AdminDashboard() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">+2350</div>
-          <p className="text-xs text-muted-foreground">+180.1% from last month</p>
+          <div className="text-2xl font-bold">+120</div>
+          <p className="text-xs text-muted-foreground">+18.1% from last month</p>
         </CardContent>
       </Card>
       <Card>
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">+12,234</div>
+          <div className="text-2xl font-bold">+1200</div>
           <p className="text-xs text-muted-foreground">+19% from last month</p>
         </CardContent>
       </Card>

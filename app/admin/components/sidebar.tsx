@@ -43,6 +43,9 @@ export function Sidebar() {
           <Users className="inline-block mr-2" size={20} />
           Service Providers
         </Link>
+<<<<<<< HEAD
+        
+=======
         <Link
           href="/admin/settings"
           className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
@@ -57,6 +60,7 @@ export function Sidebar() {
           <Settings className="inline-block mr-2" size={20} />
           Not Available Services
         </Link>
+>>>>>>> 2fb3cfdd0380b83a200492b27c3cf82c073abc39
       </nav>
     </div>
   )

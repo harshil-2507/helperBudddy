@@ -128,22 +128,36 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+<<<<<<< HEAD
     <html lang="en">
       <head>
         {/* Add UTF-8 Meta Tag */}
         <meta charSet="UTF-8" />
       </head>
       <body
+=======
+    <html>
+      <body>
+      <div
+>>>>>>> 573b92800d1643da0cf7807a26355ce3fde16a26
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
         <AuthProvider>
+<<<<<<< HEAD
           <CartProvider>
             {/* <Navbar /> */}
             {children}
           </CartProvider>
+=======
+        <CartProvider>
+          {/* <Navbar/> */}
+          {children}
+        </CartProvider>
+>>>>>>> 573b92800d1643da0cf7807a26355ce3fde16a26
         </AuthProvider>
+      </div>
       </body>
-    </html>
+      </html>
   );
 }
