@@ -33,8 +33,8 @@ export async function POST(request: Request) {
       const notificationUrl = `${process.env.NEXTAUTH_URL}/dashboard/notifications`;
       await sendEmail({
         to: worker.email,
-        subject: 'New Service Request',
-        text: `You have a new service request for ${category}. Please check it out: ${notificationUrl}`,
+        subject: 'Service Booking Confirmed - HelperBuddy',
+text: `Dear ${user.username},\n\nThank you for booking a service with HelperBudyy! Your request has been successfully confirmed.\n\n🛠 Service Category: ${serviceRequest.category}\n📍 Location: ${user.area}\n📝 \n\nOur service provider will reach out to you soon. If you have any questions or need to modify your booking, please contact our support team.\n\nWe appreciate your trust in Helper Buddy and look forward to serving you!\n\nBest regards,\nHelperBuddy Team\nhelperbuddy.gwoc@gmail.com`,
       });
     });
 
