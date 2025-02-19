@@ -235,15 +235,15 @@ export default function AboutUs() {
     ];
 
     const gallery = [
-        "/images/web1.jpg",
-        "/images/web2.jpg",
-        "/images/web3.jpg",
-        "/images/web1.jpg",
-        "/images/web2.jpg",
-        "/images/web3.jpg",
-        "/images/web1.jpg",
-        "/images/web2.jpg",
-        "/images/web3.jpg",
+        "/asserts/ac.webp",
+        "/asserts/fullhome.jpg",
+        "/asserts/watermain.webp",
+        "/asserts/refrigerator.jpg",
+        "/asserts/electrical.jpg",
+        "/asserts/plumber.webp",
+        "/asserts/washingmachine.jpg",
+        "/asserts/carenter.jpg",
+        "/asserts/waterservice.webp",
     ];
 
     useEffect(() => {

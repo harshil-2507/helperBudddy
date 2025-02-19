@@ -18,6 +18,7 @@ export default function Home() {
       <section className="relative h-[600px]">
         <Image
           src="/asserts/cleaning_homepage.jpg"
+          
           alt="Cleaning service professionals"
           fill
           className="object-cover brightness-50"

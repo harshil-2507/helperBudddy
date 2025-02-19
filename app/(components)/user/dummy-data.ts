@@ -32,28 +32,45 @@ export const dummyUser = {
   export const dummyRecommendations = [
     {
       id: 1,
-      name: "4K Ultra HD TV",
-      category: "Electronics",
-      price: 799.99,
-      rating: 4.7,
-      image: "/placeholder.svg?height=200&width=200",
+      name: "Home Deep Cleaning",
+      category: "Home Services",
+      price: 129.99,
+      rating: 4.8,
+      image: "/asserts/fullhome.jpg",
     },
     {
       id: 2,
-      name: "Bestseller Novel",
-      category: "Books",
-      price: 24.99,
-      rating: 4.5,
-      image: "/placeholder.svg?height=200&width=200",
+      name: "Salon at Home",
+      category: "Beauty & Wellness",
+      price: 49.99,
+      rating: 4.6,
+      image: "/asserts/salon.jpg",
     },
     {
       id: 3,
-      name: "Designer Sunglasses",
-      category: "Fashion",
-      price: 149.99,
-      rating: 4.3,
-      image: "/placeholder.svg?height=200&width=200",
+      name: "AC Repair & Servicing",
+      category: "Appliance Repair",
+      price: 299.99,
+      rating: 4.7,
+      image: "/asserts/ac.webp",
     },
-  ]
+    {
+      id: 4,
+      name: "Pest Control Services",
+      category: "Home Maintenance",
+      price: 199.99,
+      rating: 4.5,
+      image: "/asserts/pest-control.jpeg",
+    },
+    {
+      id: 5,
+      name: "Personal Fitness Trainer",
+      category: "Health & Fitness",
+      price: 499.99,
+      rating: 4.9,
+      image: "/asserts/personal-trainer.jpg",
+    },
+  ];
+  
   
   

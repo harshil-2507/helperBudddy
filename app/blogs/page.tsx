@@ -552,23 +552,47 @@ const BlogList = () => {
   const blogs = [
     {
       id: 1,
-      title: "The Future of Web Development",
+      title: "10 Cleaning Hacks to Keep Your Home Spotless All Year Round",
       excerpt: "Exploring the latest trends and technologies shaping the future of web development...",
       author: "Sarah Johnson",
       date: "Feb 10, 2025",
       readTime: "5 min read",
       category: "Technology",
-      color: "#FF6B6B"
+      color: "#FF6B6B",
+      image: "/asserts/blog1.webp"
     },
     {
       id: 2,
-      title: "Mastering Tailwind CSS",
+      title: "Bathroom Cleaning 101: Say Goodbye to Stains and Germs",
       excerpt: "A comprehensive guide to building beautiful interfaces with Tailwind CSS...",
       author: "Michael Chen",
       date: "Feb 8, 2025",
       readTime: "7 min read",
       category: "Design",
-      color: "#4ECDC4"
+      color: "#4ECDC4",
+      image: "/asserts/blog2.webp"
+    },
+    {
+      id: 3,
+      title: "The Future of Sustainable Living: Green Technologies You Need to Know",
+      excerpt: "Explore the latest advancements in green technology that are shaping a more sustainable world.",
+      author: "Emma Davis",
+      date: "Jan 25, 2025",
+      readTime: "6 min read",
+      category: "Technology",
+      color: "#FFD166",
+      image: "/asserts/green.jpg"
+    },
+    {
+      id: 4,
+      title: "Minimalist Home Design: How to Create a Clutter-Free Space",
+      excerpt: "Learn the principles of minimalist interior design and how to create a serene living environment.",
+      author: "David Lee",
+      date: "Jan 15, 2025",
+      readTime: "8 min read",
+      category: "Design",
+      color: "#06D6A0",
+      image: "/asserts/minimalist.jpg"
     }
   ];
 
@@ -766,7 +790,7 @@ const BlogList = () => {
                           className="h-full"
                         >
                           <img
-                            src="/api/placeholder/600/400"
+                            src= {blog.image}
                             alt={blog.title}
                             className="w-full h-full object-cover"
                           />
@@ -796,7 +820,7 @@ const BlogList = () => {
                         <div className="flex items-center gap-4 pt-4 border-t border-black/10">
                           <div className="w-10 h-10 rounded-full bg-black/10 overflow-hidden">
                             <img 
-                              src="/api/placeholder/40/40" 
+                              src="/asserts/blog2.webp" 
                               alt={blog.author}
                               className="w-full h-full object-cover"
                             />
