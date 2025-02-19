@@ -24,6 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <html>
+      <body>
       <div
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
@@ -35,5 +37,7 @@ export default function RootLayout({
         </CartProvider>
         </AuthProvider>
       </div>
+      </body>
+      </html>
   );
 }

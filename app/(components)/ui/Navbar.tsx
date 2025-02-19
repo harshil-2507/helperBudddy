@@ -135,7 +135,6 @@ import React, { useState, useContext } from 'react';
 import { Menu, X, ShoppingCart, User, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import SearchBar from '../SearchBar';
 import { CartContext } from '@/context/CartContext';
 
 interface ICartItem {
@@ -149,68 +148,68 @@ interface ICartItem {
 interface CartItem extends ICartItem {}
 
 const MiniCart = ({ items, total }: { items: CartItem[]; total: number }) => {
-    const { removeFromCart } = useContext(CartContext) || {};
-    
-    return (
-      <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
-        {items.length === 0 ? (
-          <div className="text-center py-6">
-            <ShoppingCart className="w-12 h-12 mx-auto text-gray-400 mb-2" />
-            <p className="text-gray-500">Your cart is empty</p>
-          </div>
-        ) : (
-          <>
-            <div className="max-h-64 overflow-auto">
-              {items.map((item) => (
-                <div key={item._id} className="flex items-center gap-3 py-3 border-b">
-                  <div className="relative w-12 h-12 flex-shrink-0">
-                    <Image
-                      src={item.images && item.images.length > 0 ? item.images[0] : '/placeholder.jpg'}
-                      alt={item.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-gray-900 truncate">{item.title}</h4>
-                    <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium">₹{item.price}</p>
-                    <button 
-                      onClick={() => removeFromCart && removeFromCart(item._id)}
-                      className="text-gray-400 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+  const { removeFromCart } = useContext(CartContext) || {};
+
+  return (
+    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
+      {items.length === 0 ? (
+        <div className="text-center py-6">
+          <ShoppingCart className="w-12 h-12 mx-auto text-gray-400 mb-2" />
+          <p className="text-gray-500">Your cart is empty</p>
+        </div>
+      ) : (
+        <>
+          <div className="max-h-64 overflow-auto">
+            {items.map((item) => (
+              <div key={item._id} className="flex items-center gap-3 py-3 border-b">
+                <div className="relative w-12 h-12 flex-shrink-0">
+                  <Image
+                    src={item.images?.[0] || '/placeholder.jpg'}
+                    alt={item.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded"
+                  />
                 </div>
-              ))}
-            </div>
-            <div className="mt-4 pt-3 border-t">
-              <div className="flex justify-between items-center mb-4">
-                <span className="font-medium">Total:</span>
-                <span className="font-bold">₹{total.toFixed(2)}</span>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-medium text-gray-900 truncate">{item.title}</h4>
+                  <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium">₹{item.price}</p>
+                  <button 
+                    onClick={() => removeFromCart && removeFromCart(item._id)}
+                    className="text-gray-400 hover:text-red-500 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-              <Link 
-                href="/cart"
-                className="block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                View Cart
-              </Link>
+            ))}
+          </div>
+          <div className="mt-4 pt-3 border-t">
+            <div className="flex justify-between items-center mb-4">
+              <span className="font-medium">Total:</span>
+              <span className="font-bold">₹{total.toFixed(2)}</span>
             </div>
-          </>
-        )}
-      </div>
-    );
-  };
+            <Link 
+              href="/cart"
+              className="block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              View Cart
+            </Link>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const CartButton = () => {
   const [showMiniCart, setShowMiniCart] = useState(false);
   const cartContext = useContext(CartContext);
   const cart = cartContext ? cartContext.cart : [];
-  
+
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
@@ -230,7 +229,6 @@ const CartButton = () => {
         )}
       </Link>
       
-      {/* Mini Cart Preview */}
       {showMiniCart && (
         <div 
           className="absolute z-50"
@@ -286,7 +284,6 @@ const Navbar = () => {
 
           {/* Desktop Right Section */}
           <div className="hidden md:flex items-center gap-6">
-            <SearchBar />
             <CartButton />
             <Link href="/profile" className="text-gray-300 hover:text-white">
               <User className="h-6 w-6" />
@@ -341,9 +338,6 @@ const Navbar = () => {
               >
                 About
               </Link>
-              <div className="pt-4">
-                <SearchBar />
-              </div>
               <Link
                 href="/profile"
                 className="text-gray-300 hover:text-white flex items-center gap-2"
@@ -357,7 +351,6 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Add required styles */}
       <style jsx>{`
         @keyframes scale {
           0% { transform: scale(0.8); }

@@ -7,7 +7,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 import { Button } from "./(components)/ui/button"
 import { Input } from "./(components)/ui/input"
 import { Textarea } from "./(components)/ui/textarea"
-import SearchBar from "./(components)/SearchBar"
 import ServicesGrid from "./(components)/services-grid"
 import { AuthProvider } from "@/context/AuthContext"
 import AnimatedTestimonials from "./(components)/testinomial"
@@ -21,41 +20,41 @@ export default function Home() {
   
   useEffect(() => {
     if (initialLoading) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden"
     }
-    
+
     const timer = setTimeout(() => {
-      setInitialLoading(false);
-    }, 4000);
-    
-    return () => clearTimeout(timer);
-  }, []);
-  
+      setInitialLoading(false)
+    }, 4000)
+
+    return () => clearTimeout(timer)
+  }, [initialLoading]) // Added initialLoading to dependencies
+
   const textVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08
-      }
-    }
+        staggerChildren: 0.08,
+      },
+    },
   }
-  
+
   const letterVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4 }
-    }
+      transition: { duration: 0.4 },
+    },
   }
 
   const dynamicText = ""
-  
+
   return (
     <AuthProvider>
       <Loader />
-      
+
       <main className="relative">
         <div className="absolute inset-0 h-screen w-full overflow-hidden">
           <video
@@ -77,7 +76,7 @@ export default function Home() {
             />
           </video>
         </div>
-        
+
         <nav className="relative z-10 bg-transparent py-4">
           <div className="container mx-auto flex items-center justify-between px-4">
             <div className="flex items-center gap-8">
@@ -88,7 +87,6 @@ export default function Home() {
                   width={40}
                   height={40}
                   className="h-10 w-auto"
-                  
                 />
                 <span className="text-xl font-bold text-white"></span>
               </Link>
@@ -110,7 +108,6 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-6">
-              
               <Link href="/cart" className="text-gray-300 hover:text-white">
                 <ShoppingCart className="h-6 w-6 text-white" />
               </Link>
@@ -123,21 +120,21 @@ export default function Home() {
 
         {/* Updated Hero Section */}
         <div className="relative h-screen">
-          <div className="container mx-auto px-4 h-full flex items-center">
-            <div className="w-full max-w-2xl pr-9"> {/* Added left padding */}
-              <div className = "">
-                  <motion.h2
-                initial="hidden"
-                animate="visible"
-                variants={textVariants}
-                className="text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-8"
-              >
-                {dynamicText.split("").map((char, index) => (
-                  <motion.span key={index} variants={letterVariants}>
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
-              </motion.h2>
+          <div className="container mx-auto px-4 h-full flex items-center justify-center pt-20">
+            <div className="text-center mt-16">
+              <div>
+                <motion.h2
+                  initial="hidden"
+                  animate="visible"
+                  variants={textVariants}
+                  className="text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-8"
+                >
+                  {dynamicText.split("").map((char, index) => (
+                    <motion.span key={index} variants={letterVariants}>
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+                </motion.h2>
               </div>
               <Link
                 href="/book"
@@ -151,7 +148,7 @@ export default function Home() {
 
         <ServicesGrid />
 
-        <AnimatedTestimonials/>
+        <AnimatedTestimonials />
 
         <section className="py-16">
           <div className="container mx-auto px-4">
@@ -175,15 +172,15 @@ export default function Home() {
                 <AccordionItem value="item-3">
                   <AccordionTrigger>How do I book a cleaning service?</AccordionTrigger>
                   <AccordionContent>
-                    Booking is easy! Just give us a call or fill out our online form. We'll set up a time that works best
-                    for you.
+                    Booking is easy! Just give us a call or fill out our online form. We'll set up a time that works
+                    best for you.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
                   <AccordionTrigger>How much does your service cost?</AccordionTrigger>
                   <AccordionContent>
-                    The cost depends on the size of your home or office and the type of cleaning you need. We have options
-                    for every budget. For exact prices, check our pricing page/contact us.
+                    The cost depends on the size of your home or office and the type of cleaning you need. We have
+                    options for every budget. For exact prices, check our pricing page/contact us.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -203,20 +200,20 @@ export default function Home() {
                 </div>
                 <div className="mb-8">
                   <h3 className="mb-2 text-xl font-semibold">Contacts</h3>
-                  <p>6359398479</p>
+                  <p>+91 6359398479</p>
                   <p>hello@helperbuddy.in</p>
                 </div>
                 <div className="flex gap-4">
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://www.facebook.com/people/Helper-Buddy/61566410515044/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Facebook className="h-6 w-6" />
                   </Link>
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://www.instagram.com/helperbuddy.in/reels/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Instagram className="h-6 w-6" />
                   </Link>
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Linkedin className="h-6 w-6" />
                   </Link>
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://x.com/helperbuddyin" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Twitter className="h-6 w-6" />
                   </Link>
                 </div>
@@ -259,3 +256,4 @@ export default function Home() {
     </AuthProvider>
   )
 }
+
