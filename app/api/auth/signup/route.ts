@@ -45,8 +45,8 @@ export async function POST(request: Request) {
     const mailOptions = {
       from: process.env.EMAIL_USER!,
       to: email,
-      subject: 'Verify Your Email - Helper Buddy',
-      text: `Your OTP is: ${otp}. It expires in 10 minutes.`,
+      subject: 'Your OTP for Verification – Helper Buddy',
+      text: `Dear ${user.username},\n\nThank you for signing up with HelperBuddy! To complete your verification, please use the One-Time Password (OTP) below:\n\n🔐 Your OTP: ${otp}\n\nThis OTP is valid for 10 min and should not be shared with anyone for security reasons.\n\nIf you did not request this verification, please ignore this email or contact our support team immediately.\n\nBest regards,\nHelper Buddy Team\nhelperbuddy.gwoc@gmail.com`
     };
 
     await transporter.sendMail(mailOptions);
