@@ -9,56 +9,11 @@ import SearchBar from "./(components)/SearchBar"
 import ServicesGrid from "./(components)/services-grid"
 import { AuthProvider } from "@/context/AuthContext"
 import AnimatedTestimonials from "./(components)/testinomial"
+import Navbar from "./(components)/ui/Navbar"
 export default function Home() {
   return (
     <AuthProvider>
       <main>
-      {/* Navigation */}
-      <nav className="border-b bg-black py-4 shadow-sm">
-        <div className="container mx-auto flex items-center justify-between px-4">
-          <div className="flex items-center gap-8">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/asserts/helperBuddyLogo.avif"
-                alt="Helper Buddy Logo"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
-              />
-              <span className="text-xl font-bold text-white"></span>
-            </Link>
-
-            {/* Main Navigation */}
-            <div className="flex items-center gap-6">
-              <Link href="/services" className="text-gray-300 hover:text-white">
-                Services
-              </Link>
-              <Link href="/blog" className="text-gray-300 hover:text-white">
-                Blog
-              </Link>
-              <Link href="/contact" className="text-gray-300 hover:text-white">
-                Contact
-              </Link>
-              <Link href="/about" className="text-gray-300 hover:text-white">
-                About
-              </Link>
-            </div>
-          </div>
-
-          {/* Right Section */}
-          <div className="flex items-center gap-6">
-            <SearchBar />
-            <Link href="/cart" className="text-gray-300 hover:text-white">
-              <ShoppingCart className="h-6 w-6 text-white" />
-            </Link>
-            <Link href="/profile" className="text-gray-300 hover:text-white">
-              <User className="h-6 w-6 text-white" />
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="relative h-[600px]">
         <Image

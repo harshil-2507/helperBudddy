@@ -296,7 +296,7 @@ export default function UsersPage() {
                         <div className="flex gap-2">
                           {service.images.map((image, index) => (
                             <div key={index} className="relative w-16 h-16">
-                              <Image
+                              <img
                                 src={image}
                                 alt={`${service.name} image ${index + 1}`}
                                 fill

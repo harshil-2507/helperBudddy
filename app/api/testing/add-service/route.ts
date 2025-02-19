@@ -1,4 +1,4 @@
-// app/api/gwoc/add-service/route.ts
+// app/api/add-service/route.ts
 import { NextResponse } from 'next/server';
 import connectDB from '../../../../lib/dbConnect';
 import User from '../../../../models/User';
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const workers = await Worker.find({ isApproved: true, 'services.category': category });
 
     workers.forEach(async (worker) => {
-      const notificationUrl = `${process.env.NEXTAUTH_URL}/gwoc-career/notifications`;
+      const notificationUrl = `${process.env.NEXTAUTH_URL}/dashboard/notifications`;
       await sendEmail({
         to: worker.email,
         subject: 'New Service Request',

@@ -1,20 +1,28 @@
-// models/ServiceRequest.ts
 import mongoose, { Schema, Document } from 'mongoose';
-import { IUser } from './User';
+import User from './User';
+import SubService from './subservices';
 
 export interface IServiceRequest extends Document {
   userId: mongoose.Types.ObjectId;
+  serviceId: mongoose.Types.ObjectId;
   category: string;
   dateTime: Date;
   duration: string;
   status: 'pending' | 'accepted' | 'rejected';
   serviceProviderId?: mongoose.Types.ObjectId;
+  address: string;
+  area: string;
 }
 
 const serviceRequestSchema = new Schema<IServiceRequest>({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: User,
+    required: true,
+  },
+  serviceId: {
+    type: Schema.Types.ObjectId,
+    ref: SubService,
     required: true,
   },
   category: {
@@ -37,6 +45,14 @@ const serviceRequestSchema = new Schema<IServiceRequest>({
   serviceProviderId: {
     type: Schema.Types.ObjectId,
     ref: 'Worker',
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  area: {
+    type: String,
+    required: true,
   },
 }, { timestamps: true });
 
