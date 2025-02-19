@@ -50,6 +50,13 @@ export function Sidebar() {
           <Settings className="inline-block mr-2" size={20} />
           Settings
         </Link>
+        <Link
+          href="/admin/nonavailservice"
+          className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+        >
+          <Settings className="inline-block mr-2" size={20} />
+          Not Available Services
+        </Link>
       </nav>
     </div>
   )
