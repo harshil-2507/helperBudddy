@@ -101,6 +101,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {CartContext} from "@/context/CartContext"; // We'll create this next
+import Navbar from "../(components)/ui/Navbar";
 
 export interface ISubService {
     _id: string;
@@ -148,6 +149,7 @@ const ServicesPage = () => {
 
     return (
         <div className="relative min-h-screen bg-white text-black">
+            <Navbar />
             <div className="relative z-10 container mx-auto px-6 py-16">
                 <h1 className="text-5xl font-bold text-center mb-12">Our Services</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

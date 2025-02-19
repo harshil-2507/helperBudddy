@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/dbConnect';
 import ServiceRequest from '@/models/ServiceRequest';
+import subservices from '@/models/subservices';
 import User from '@/models/User';
-import SubService from '@/models/subservices'; // Import the subservices model
 
 export async function POST(request: Request) {
   const { services, userId, address, area } = await request.json();
@@ -11,14 +11,14 @@ export async function POST(request: Request) {
     await connectDB();
 
     const user = await User.findById(userId);
-    console.log('User:', user);
     if (!user) return NextResponse.json({ message: 'User not found' }, { status: 404 });
 
     if (!address || !area) return NextResponse.json({ message: 'Address and area are required' }, { status: 400 });
 
     const serviceRequests = [];
     for (const { serviceId, dateTime, duration } of services) {
-      const subService = await SubService.findById(serviceId);
+      console.log('serviceId:', serviceId);
+      const subService = await subservices.findById(serviceId);
       if (!subService) return NextResponse.json({ message: 'Service not found' }, { status: 404 });
 
       const serviceRequest = new ServiceRequest({
@@ -40,7 +40,8 @@ export async function POST(request: Request) {
     user.area = area || user.area;
     await user.save();
 
-    return NextResponse.json({ message: 'Service requests created successfully', data: serviceRequests }, { status: 201 });
+    // Simulate a successful payment
+    return NextResponse.json({ message: 'Payment successful', data: serviceRequests }, { status: 201 });
   } catch (error) {
     console.error('Error during checkout:', error);
     return NextResponse.json({ message: 'Server error' }, { status: 500 });

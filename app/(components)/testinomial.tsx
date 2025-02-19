@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
@@ -8,6 +7,7 @@ import { Star } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Your existing shader code and setup remains unchanged
 const vertexShader = `
   uniform float uTime;
   uniform float uSize;
@@ -240,34 +240,52 @@ const AnimatedTestimonials = () => {
     };
   }, []);
 
-  // Rest of the component remains the same...
   return (
-    <section ref={sectionRef} className="relative min-h-screen bg-black py-16 text-white overflow-hidden">
+    <section 
+      ref={sectionRef} 
+      className="relative py-24 bg-black text-white overflow-hidden"
+    >
+      {/* Canvas for three.js effect */}
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
       />
+      
+      {/* Semi-transparent background overlay to improve readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/70 z-0" />
+      
       <div className="container relative mx-auto px-4 z-10">
-        <h2 className="mb-12 text-center text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500">
+        {/* Enhanced heading with larger text and stronger glow effect */}
+        <h2 className="mb-16 text-center text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 drop-shadow-[0_0_25px_rgba(192,132,252,0.5)]">
           What Our Customers Say
         </h2>
-        <div className="grid gap-8 md:grid-cols-2">
+        
+        {/* Enhanced card container with more spacing */}
+        <div className="grid gap-12 md:grid-cols-2 max-w-6xl mx-auto">
+          {/* First testimonial - enhanced visibility */}
           <div className="testimonial-card group">
-            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-gray-900/70 to-gray-800/70 backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-gray-700/30">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="mb-4 flex justify-center">
+            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-lg transform transition-all duration-300 hover:scale-105 shadow-lg shadow-purple-500/10 hover:shadow-purple-500/30 border-2 border-gray-700/50">
+              {/* Enhanced hover effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Larger star rating */}
+              <div className="mb-6 flex justify-center">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className="h-6 w-6 fill-yellow-400 text-yellow-400 transform transition-transform hover:scale-110"
+                    className="h-8 w-8 fill-yellow-400 text-yellow-400 transform transition-transform hover:scale-110 drop-shadow-lg"
                   />
                 ))}
               </div>
-              <p className="mb-6 text-gray-200 text-lg">
+              
+              {/* Enhanced testimonial text with better contrast and shadow */}
+              <p className="mb-8 text-gray-100 text-xl leading-relaxed text-center drop-shadow-md">
                 The AC cleaning service was thorough and efficient. My home feels fresh and cool again. Thank you.
               </p>
+              
+              {/* Enhanced profile section with better contrast */}
               <div className="flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 p-[2px]">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 p-[3px] shadow-lg shadow-purple-500/30">
                   <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
                     <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500">
                       P
@@ -275,7 +293,7 @@ const AnimatedTestimonials = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <p className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500">
+                  <p className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 drop-shadow-lg">
                     Priya Patel
                   </p>
                 </div>
@@ -283,23 +301,31 @@ const AnimatedTestimonials = () => {
             </div>
           </div>
 
+          {/* Second testimonial - enhanced visibility */}
           <div className="testimonial-card group">
-            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-gray-900/70 to-gray-800/70 backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-gray-700/30">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="mb-4 flex justify-center">
+            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-lg transform transition-all duration-300 hover:scale-105 shadow-lg shadow-purple-500/10 hover:shadow-purple-500/30 border-2 border-gray-700/50">
+              {/* Enhanced hover effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Larger star rating */}
+              <div className="mb-6 flex justify-center">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className="h-6 w-6 fill-yellow-400 text-yellow-400 transform transition-transform hover:scale-110"
+                    className="h-8 w-8 fill-yellow-400 text-yellow-400 transform transition-transform hover:scale-110 drop-shadow-lg"
                   />
                 ))}
               </div>
-              <p className="mb-6 text-gray-200 text-lg">
+              
+              {/* Enhanced testimonial text with better contrast and shadow */}
+              <p className="mb-8 text-gray-100 text-xl leading-relaxed text-center drop-shadow-md">
                 Helper Buddy transformed my home with their exceptional cleaning service. Highly recommend for any
                 cleaning needs.
               </p>
+              
+              {/* Enhanced profile section with better contrast */}
               <div className="flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 p-[2px]">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 p-[3px] shadow-lg shadow-purple-500/30">
                   <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
                     <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500">
                       P
@@ -307,7 +333,7 @@ const AnimatedTestimonials = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <p className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500">
+                  <p className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 drop-shadow-lg">
                     Purvi Patel
                   </p>
                 </div>
@@ -315,6 +341,9 @@ const AnimatedTestimonials = () => {
             </div>
           </div>
         </div>
+        
+        {/* Optional "View More" button for better UX */}
+        
       </div>
     </section>
   );

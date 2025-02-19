@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ const CartPage = () => {
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       // Redirect to login page if no user ID is found
@@ -28,43 +29,98 @@ const CartPage = () => {
         dateTime: new Date().toISOString(), // Adjust dateTime as needed
         duration: "30m", // Adjust duration as needed
       }));
-  
+
       const checkoutData = {
         services,
         userId,
         address: "User's address", // Fetch from user profile or input field
         area: "User's area", // Fetch from user profile or input field
       };
-  
+
       console.log('Sending checkout data:', checkoutData);
-  
-      fetch("/api/checkout", { // Ensure the endpoint is correct
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(checkoutData),
-      })
-      .then((response) => {
-        console.log('Response status:', response.status);
+
+      try {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(checkoutData),
+        });
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
-      })
-      .then((data) => {
+
+        const data = await response.json();
         console.log('Checkout response data:', data);
+
         if (data.message) {
-          clearCart();
-          router.push("/cart/success");
+          // Create Razorpay order
+          const amount = totalPrice; // Total amount from cart
+          const currency = "INR";
+          const receipt = `order_rcptid_${new Date().getTime()}`;
+
+          const razorpayResponse = await fetch("/api/razorpay", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount, currency, receipt }),
+          });
+
+          if (!razorpayResponse.ok) {
+            throw new Error('Failed to create Razorpay order');
+          }
+
+          const razorpayData = await razorpayResponse.json();
+          console.log('Razorpay order data:', razorpayData);
+
+          // Initialize Razorpay payment
+          const options = {
+            key: process.env.RAZORPAY_KEY_ID, // Use your test key_id
+            amount: razorpayData.order.amount.toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            currency: "INR",
+            name: "Acme Corp",
+            description: "Test Transaction",
+            image: "https://example.com/your_logo", // Replace with your logo URL
+            order_id: razorpayData.order.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            handler: function (response) {
+              alert(`Payment successful: ${response.razorpay_payment_id}`);
+              clearCart();
+              router.push("/cart/success");
+            },
+            prefill: {
+              name: "Gaurav Kumar",
+              email: "gaurav.kumar@example.com",
+              contact: "9999999999",
+            },
+            notes: {
+              address: "Razorpay Corporate Office",
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+
+          const rzp = new Razorpay(options);
+          rzp.open();
         } else {
           alert(data.message || "Checkout failed. Please try again.");
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error during checkout:", error);
         alert("Checkout failed. Please try again.");
-      });
+      }
     }
   };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">

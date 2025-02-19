@@ -27,8 +27,9 @@ export async function POST(request: Request) {
 
     await sendEmail({
       to: user.email,
-      subject: 'Password Reset Request',
-      text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`,
+subject: 'Password Reset Request - HelperBuddy',
+text: `Dear ${user.username},\n\nWe received a request to reset your password for your HelperBuddy account. If you made this request, please click the secure link below to reset your password:\n\n🔗 Reset Password: ${resetUrl}\n\nThis link is valid for 1hr and will expire after that for security reasons.\n\nIf you did not request this password reset, please ignore this email, and your password will remain unchanged. If you need any assistance, please contact our support team.\n\nBest regards,\nHelperBuddy Team\nhelperbuddy.gwoc@gmail.com`
+
     });
 
     return NextResponse.json({ message: 'Password reset email sent' }, { status: 200 });
