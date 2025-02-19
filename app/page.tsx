@@ -52,7 +52,7 @@ export default function Home() {
             <Link href="/cart" className="text-gray-300 hover:text-white">
               <ShoppingCart className="h-6 w-6 text-white" />
             </Link>
-            <Link href="/profile" className="text-gray-300 hover:text-white">
+            <Link href="/login" className="text-gray-300 hover:text-white">
               <User className="h-6 w-6 text-white" />
             </Link>
           </div>
