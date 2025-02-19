@@ -55,7 +55,7 @@ export default function Home() {
     <AuthProvider>
       <Loader />
       
-      <main className="relative">
+      <main className="relative" suppressHydrationWarning>
         <div className="absolute inset-0 h-screen w-full overflow-hidden">
           <video
             autoPlay
@@ -96,7 +96,7 @@ export default function Home() {
                 <Link href="/services" className="text-gray-300 hover:text-white">
                   Services
                 </Link>
-                <Link href="/blog" className="text-gray-300 hover:text-white">
+                <Link href="/blogs" className="text-gray-300 hover:text-white">
                   Blog
                 </Link>
                 <Link href="/contact" className="text-gray-300 hover:text-white">

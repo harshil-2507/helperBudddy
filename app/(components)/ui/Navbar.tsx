@@ -194,7 +194,7 @@ const MiniCart = ({ items, total }: { items: CartItem[]; total: number }) => {
             </div>
             <Link 
               href="/cart"
-              className="block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="block w-full bg-black text-white text-center py-2 rounded-lg hover:bg-black transition-colors"
             >
               View Cart
             </Link>
