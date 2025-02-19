@@ -24,22 +24,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
+      <div
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
         <AuthProvider>
         <CartProvider>
-<<<<<<< HEAD
           {/* <Navbar/> */}
-=======
-
->>>>>>> 4b72bed950edf6bab562df36b5a0f416d2967f12
           {children}
         </CartProvider>
         </AuthProvider>
-      </body>
-    </html>
+      </div>
   );
 }
