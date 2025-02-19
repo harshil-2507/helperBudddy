@@ -1,77 +1,10 @@
-// "use client";
-// import React from "react";
-// import { useCart } from "@/context/CartContext";
-// import Image from "next/image";
-
-// const CartPage = () => {
-//     const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
-
-//     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-
-//     return (
-//         <div className="min-h-screen bg-white text-black p-6">
-//             <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
-//             {cart.length === 0 ? (
-//                 <p className="text-gray-500">Your cart is empty.</p>
-//             ) : (
-//                 <div className="space-y-6">
-//                     {cart.map((item) => (
-//                         <div key={item._id} className="flex items-center justify-between border-b pb-4">
-//                             <div className="flex items-center space-x-4">
-//                                 <div className="relative w-20 h-20">
-//                                     <Image
-//                                         src={item.image}
-//                                         alt={item.title}
-//                                         layout="fill"
-//                                         objectFit="cover"
-//                                         className="rounded-md"
-//                                     />
-//                                 </div>
-//                                 <div>
-//                                     <h2 className="text-xl font-semibold">{item.title}</h2>
-//                                     <p className="text-gray-500">₹{item.price}</p>
-//                                 </div>
-//                             </div>
-//                             <div className="flex items-center space-x-4">
-//                                 <input
-//                                     type="number"
-//                                     value={item.quantity}
-//                                     onChange={(e) => updateQuantity(item._id, parseInt(e.target.value))}
-//                                     className="w-16 px-2 py-1 border rounded"
-//                                     min="1"
-//                                 />
-//                                 <button
-//                                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-//                                     onClick={() => removeFromCart(item._id)}
-//                                 >
-//                                     Remove
-//                                 </button>
-//                             </div>
-//                         </div>
-//                     ))}
-//                     <div className="flex justify-between items-center mt-8">
-//                         <button
-//                             className="px-6 py-3 bg-red-500 text-white rounded hover:bg-red-600 transition"
-//                             onClick={clearCart}
-//                         >
-//                             Clear Cart
-//                         </button>
-//                         <div className="text-2xl font-bold">Total: ₹{totalPrice}</div>
-//                     </div>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default CartPage;
-
-"use client"
+"use client";
 import React from "react";
+import { useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
-import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
 
 const CartPage = () => {
   const router = useRouter();
@@ -83,6 +16,111 @@ const CartPage = () => {
   );
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+  const handleCheckout = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      // Redirect to login page if no user ID is found
+      router.push("/login");
+    } else {
+      // Proceed with checkout if user ID is found
+      const services = cart.map((item) => ({
+        serviceId: item._id,
+        dateTime: new Date().toISOString(), // Adjust dateTime as needed
+        duration: "30m", // Adjust duration as needed
+      }));
+
+      const checkoutData = {
+        services,
+        userId,
+        address: "User's address", // Fetch from user profile or input field
+        area: "User's area", // Fetch from user profile or input field
+      };
+
+      console.log('Sending checkout data:', checkoutData);
+
+      try {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(checkoutData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('Checkout response data:', data);
+
+        if (data.message) {
+          // Create Razorpay order
+          const amount = totalPrice; // Total amount from cart
+          const currency = "INR";
+          const receipt = `order_rcptid_${new Date().getTime()}`;
+
+          const razorpayResponse = await fetch("/api/razorpay", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount, currency, receipt }),
+          });
+
+          if (!razorpayResponse.ok) {
+            throw new Error('Failed to create Razorpay order');
+          }
+
+          const razorpayData = await razorpayResponse.json();
+          console.log('Razorpay order data:', razorpayData);
+
+          // Initialize Razorpay payment
+          const options = {
+            key: process.env.RAZORPAY_KEY_ID, // Use your test key_id
+            amount: razorpayData.order.amount.toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            currency: "INR",
+            name: "Acme Corp",
+            description: "Test Transaction",
+            image: "https://example.com/your_logo", // Replace with your logo URL
+            order_id: razorpayData.order.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            handler: function (response) {
+              alert(`Payment successful: ${response.razorpay_payment_id}`);
+              clearCart();
+              router.push("/cart/success");
+            },
+            prefill: {
+              name: "Gaurav Kumar",
+              email: "gaurav.kumar@example.com",
+              contact: "9999999999",
+            },
+            notes: {
+              address: "Razorpay Corporate Office",
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+
+          const rzp = new Razorpay(options);
+          rzp.open();
+        } else {
+          alert(data.message || "Checkout failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during checkout:", error);
+        alert("Checkout failed. Please try again.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -133,7 +171,7 @@ const CartPage = () => {
                       <Image
                         src={item.image}
                         alt={item.title}
-                        layout="fill"
+                        fill
                         objectFit="cover"
                         className="rounded-lg"
                       />
@@ -202,7 +240,7 @@ const CartPage = () => {
                     <span>Total</span>
                     <span>₹{totalPrice.toFixed(2)}</span>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors" onClick={handleCheckout}>
                     Proceed to Checkout
                   </button>
                 </div>

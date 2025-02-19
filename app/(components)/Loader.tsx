@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { Howl } from "howler";
+
 
 // Define greeting messages in different languages
 const greetings = [
@@ -17,7 +19,7 @@ const Loader = () => {
   const [isAnimatingText, setIsAnimatingText] = useState(true);
 
   useEffect(() => {
-    const cycleTime = 1000;
+    const cycleTime = 2000; // Time for each greeting
     const totalCycles = greetings.length;
     const totalAnimationTime = cycleTime * totalCycles;
 
@@ -34,22 +36,35 @@ const Loader = () => {
       document.body.style.overflow = "auto";
     }, totalAnimationTime + 500);
 
+    // Play a simple sound effect
+    const sound = new Howl({
+      src: ["https://example.com/your-sound-file.mp3"], // Replace with your sound file URL
+      autoplay: true,
+      loop: true,
+      volume: 0.5,
+      onend: () => {
+        sound.play();
+      }
+    });
+
     return () => {
       clearInterval(greetingInterval);
       clearTimeout(hideTimeout);
       clearTimeout(completeAnimationTimeout);
+      sound.unload();
     };
   }, []);
 
   if (!showLoader) return null;
 
   const textVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
+      y: 0,
       transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1
+        duration: 0.5,
+        ease: "easeInOut"
       }
     }
   };
@@ -59,7 +74,7 @@ const Loader = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.3 }
+      transition: { duration: 0.3, ease: "easeInOut" }
     }
   };
 
@@ -81,7 +96,7 @@ const Loader = () => {
         />
       </div>
 
-      {/* Animated Text for Greetings - ensuring full-width visibility */}
+      {/* Animated Text for Greetings */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentGreetingIndex}
@@ -118,7 +133,7 @@ const Loader = () => {
           className="h-full bg-white rounded-full"
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
-          transition={{ duration: 3.5, ease: "linear" }}
+          transition={{ duration: 5, ease: "linear" }} // Complete one turn in 2 seconds
         />
       </motion.div>
     </motion.div>

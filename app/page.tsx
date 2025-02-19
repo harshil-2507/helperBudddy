@@ -200,20 +200,20 @@ export default function Home() {
                 </div>
                 <div className="mb-8">
                   <h3 className="mb-2 text-xl font-semibold">Contacts</h3>
-                  <p>6359398479</p>
+                  <p>+91 6359398479</p>
                   <p>hello@helperbuddy.in</p>
                 </div>
                 <div className="flex gap-4">
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://www.facebook.com/people/Helper-Buddy/61566410515044/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Facebook className="h-6 w-6" />
                   </Link>
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://www.instagram.com/helperbuddy.in/reels/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Instagram className="h-6 w-6" />
                   </Link>
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Linkedin className="h-6 w-6" />
                   </Link>
-                  <Link href="#" className="text-white hover:text-gray-300">
+                  <Link href="https://x.com/helperbuddyin" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
                     <Twitter className="h-6 w-6" />
                   </Link>
                 </div>
