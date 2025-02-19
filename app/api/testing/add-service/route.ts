@@ -15,8 +15,8 @@ export async function POST(request: Request) {
     const user = await User.findById(userId);
     if (!user) return NextResponse.json({ message: 'User not found' }, { status: 404 });
 
-    const existingRequest = await ServiceRequest.findOne({ userId, category, status: 'pending' });
-    if (existingRequest) return NextResponse.json({ message: 'Service request already exists' }, { status: 400 });
+    // const existingRequest = await ServiceRequest.findOne({ userId, category, status: 'pending' });
+    // if (existingRequest) return NextResponse.json({ message: 'Service request already exists' }, { status: 400 });
 
     const serviceRequest = new ServiceRequest({
       userId,
