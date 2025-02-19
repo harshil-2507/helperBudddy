@@ -53,26 +53,6 @@ export default function Home() {
 
   return (
     <AuthProvider>
-<<<<<<< HEAD
-      <main>
-      {/* Hero Section */}
-      <section className="relative h-[600px]">
-        <Image
-          src="/asserts/cleaning_homepage.jpg"
-          
-          alt="Cleaning service professionals"
-          fill
-          className="object-cover brightness-50"
-          priority
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          <h1 className="container mx-auto max-w-4xl px-4 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-            Reliable, Fast & Affordable Services – Your Helper Buddy is Just a Click Away
-          </h1>
-          <Link
-            href="/book"
-            className="mt-8 rounded-full border-2 border-white bg-transparent px-8 py-3 text-white transition-colors hover:bg-white hover:text-black"
-=======
       <Loader />
 
       <main className="relative">
@@ -86,7 +66,6 @@ export default function Home() {
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
             disableRemotePlayback
->>>>>>> refs/remotes/origin/main
           >
             <source src="/asserts/prism.mp4" type="video/mp4" />
             <Image
@@ -277,4 +256,3 @@ export default function Home() {
     </AuthProvider>
   )
 }
-
