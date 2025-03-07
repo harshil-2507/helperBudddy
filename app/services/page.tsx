@@ -860,8 +860,8 @@ import { useEffect, useState, useContext, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { CartContext } from "@/context/CartContext"
-import { Search, ShoppingCart } from "lucide-react"
-import Link from "next/link"
+import { Search } from "lucide-react"
+// import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 
 import { Input } from "@/components/ui/input"
@@ -1075,7 +1075,7 @@ const ServicesPage = () => {
               <NotFoundIcon />
               <h3 className="text-xl font-semibold text-gray-300 mb-2">Oops! Service Not Found</h3>
               <p className="text-gray-400 mb-4">
-                Sorry, we don't offer that service yet. We're working on making this service available soon!
+                Sorry, we don&apos;t offer that service yet. We&apos;re working on making this service available soon!
               </p>
             </motion.div>
           )}

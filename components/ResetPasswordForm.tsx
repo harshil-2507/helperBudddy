@@ -2,13 +2,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 export default function ResetPasswordForm({ token }: { token: string }) {
   const [formData, setFormData] = useState({ password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       } else {
         setError(data.message || 'An error occurred. Please try again.');
       }
-    } catch (err) {
+    } catch (err) {console.log(err);
       setError('An error occurred. Please try again.');
     }
   };

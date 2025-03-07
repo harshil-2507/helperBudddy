@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const workers = await Worker.find({ isApproved: true, 'services.category': category });
 
     workers.forEach(async (worker) => {
-      const notificationUrl = `${process.env.NEXTAUTH_URL}/dashboard/notifications`;
+      // const notificationUrl = `${process.env.NEXTAUTH_URL}/dashboard/notifications`;
       await sendEmail({
         to: worker.email,
         subject: 'Service Booking Confirmed - HelperBuddy',

@@ -15,9 +15,9 @@ import { useState, useEffect } from "react"
 import Loader from "./(components)/Loader"
 
 export default function Home() {
-  const [email, setEmail] = useState("")
+  // const [email, setEmail] = useState("")
   const [initialLoading, setInitialLoading] = useState(true)
-
+  
   useEffect(() => {
     if (initialLoading) {
       document.body.style.overflow = "hidden"
@@ -95,7 +95,7 @@ export default function Home() {
                 <Link href="/services" className="text-gray-300 hover:text-white">
                   Services
                 </Link>
-                <Link href="/blog" className="text-gray-300 hover:text-white">
+                <Link href="/blogs" className="text-gray-300 hover:text-white">
                   Blog
                 </Link>
                 <Link href="/contact" className="text-gray-300 hover:text-white">
@@ -119,7 +119,7 @@ export default function Home() {
         </nav>
 
         {/* Updated Hero Section */}
-        <div className="relative h-screen">
+        <div className="relative h-screen pt-20">
           <div className="container mx-auto px-4 h-full flex items-center justify-center pt-20">
             <div className="text-center mt-16">
               <div>
@@ -166,13 +166,13 @@ export default function Home() {
                   <AccordionTrigger>What cleaning services do you offer?</AccordionTrigger>
                   <AccordionContent>
                     We offer a variety of cleaning services, including home cleaning, office cleaning, and AC cleaning.
-                    Whether you need a deep clean or regular maintenance, we've got you covered.
+                    Whether you need a deep clean or regular maintenance, we&apos;ve got you covered.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
                   <AccordionTrigger>How do I book a cleaning service?</AccordionTrigger>
                   <AccordionContent>
-                    Booking is easy! Just give us a call or fill out our online form. We'll set up a time that works
+                    Booking is easy! Just give us a call or fill out our online form. We&apos;ll set up a time that works
                     best for you.
                   </AccordionContent>
                 </AccordionItem>

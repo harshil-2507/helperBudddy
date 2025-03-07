@@ -35,6 +35,7 @@ export default function ServicesPage() {
       setServices(data)
     } catch (error) {
       alert("Failed to fetch services")
+      console.log(error)
     }
   }
 
@@ -58,6 +59,7 @@ export default function ServicesPage() {
       alert("Service added successfully")
     } catch (error) {
       alert("Failed to add service")
+      console.log(error)
     }
   }
 
@@ -87,6 +89,7 @@ export default function ServicesPage() {
       alert("Service updated successfully")
     } catch (error) {
       alert("Failed to update service")
+      console.log(error)
     }
   }
 
@@ -108,6 +111,7 @@ export default function ServicesPage() {
       alert("Service deleted successfully")
     } catch (error) {
       alert("Failed to delete service")
+      console.log(error)
     }
   }
 

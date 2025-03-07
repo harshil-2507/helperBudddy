@@ -418,8 +418,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { ShoppingCart, Users, Star, Clock, Instagram, Facebook, Twitter, Linkedin, Phone, Mail, MapPin, Zap } from "lucide-react";
-import CleaningLoader from "../(components)/ui/CleaningLoader";
+// import CleaningLoader from "../(components)/ui/CleaningLoader";
 import Navbar from "../(components)/ui/Navbar";
+import Image from 'next/image'
 
 export default function AboutUs() {
     const [clientCount, setClientCount] = useState(0);
@@ -427,7 +428,8 @@ export default function AboutUs() {
     const controls = useAnimation();
     const statsRef = useRef(null);
     const isStatsInView = useInView(statsRef);
-
+    console.log(ShoppingCart)
+    console.log(Clock)
     const fullText = "Fast Service";
     let index = 0;
 
@@ -458,7 +460,7 @@ export default function AboutUs() {
     useEffect(() => {
         if (isStatsInView) {
             controls.start("visible");
-            let count = 1;
+            // let count = 1;
             const interval = setInterval(() => {
                 setClientCount((prev) => {
                     if (prev >= 500) {
@@ -473,17 +475,18 @@ export default function AboutUs() {
     }, [isStatsInView, controls]);
 
     useEffect(() => {
-        let typingInterval = setInterval(() => {
+        const typingInterval = setInterval(() => {
             setTypedText((prev) => {
                 if (index === fullText.length) {
                     clearInterval(typingInterval);
+                    console.log(prev)
                     return fullText;
                 }
                 return fullText.substring(0, index++);
             });
         }, 300);
         return () => clearInterval(typingInterval);
-    }, []);
+    }, [index]);
 
     return (
         <div className="bg-black text-white relative">
@@ -563,11 +566,13 @@ export default function AboutUs() {
                                 transition={{ duration: 0.6, delay: index * 0.2 }}
                                 className="overflow-hidden rounded-lg shadow-lg"
                             >
-                                <img
-                                    src={image}
-                                    alt={`Gallery image ${index + 1}`}
-                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                                />
+                                <Image
+                        src={image}
+                        alt={`Gallery image ${index + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover hover:scale-105 transition-transform duration-300"
+                    />
                             </motion.div>
                         ))}
                     </div>

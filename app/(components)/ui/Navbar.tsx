@@ -145,9 +145,9 @@ interface ICartItem {
   price: number;
 }
 
-interface CartItem extends ICartItem {}
+// interface CartItem extends ICartItem {}
 
-const MiniCart = ({ items, total }: { items: CartItem[]; total: number }) => {
+const MiniCart = ({ items, total }: { items: ICartItem[]; total: number }) => {
   const { removeFromCart } = useContext(CartContext) || {};
 
   return (

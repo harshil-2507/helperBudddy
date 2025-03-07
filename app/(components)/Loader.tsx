@@ -8,9 +8,9 @@ import { Howl } from "howler";
 
 // Define greeting messages in different languages
 const greetings = [
-  { language: "English", text: "Welcome to Helper Buddy" },
-  { language: "Hindi", text: "हेल्पर बडी में आपका स्वागत है" },
-  { language: "Gujarati", text: "હેલ્પર બડી માં આપનું સ્વાગત છે" }
+  { language: "", text: "Welcome to Helper Buddy" },
+  // { language: "Hindi", text: "हेल्पर बडी में आपका स्वागत है" },
+  // { language: "Gujarati", text: "હેલ્પર બડી માં આપનું સ્વાગત છે" }
 ];
 
 const Loader = () => {
@@ -28,6 +28,7 @@ const Loader = () => {
     }, cycleTime);
 
     const completeAnimationTimeout = setTimeout(() => {
+      console.log(isAnimatingText)
       setIsAnimatingText(false);
     }, totalAnimationTime);
 
@@ -53,7 +54,7 @@ const Loader = () => {
       clearTimeout(completeAnimationTimeout);
       sound.unload();
     };
-  }, []);
+  }, [isAnimatingText]);
 
   if (!showLoader) return null;
 
@@ -133,7 +134,7 @@ const Loader = () => {
           className="h-full bg-white rounded-full"
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
-          transition={{ duration: 5, ease: "linear" }} // Complete one turn in 2 seconds
+          transition={{ duration: 2, ease: "linear" }} // Complete one turn in 2 seconds
         />
       </motion.div>
     </motion.div>

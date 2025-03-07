@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import  {connect}  from '@/lib/mongodb'
 import subService from '@/app/models/subservices'
-
+import { Error as MongooseError } from 'mongoose'
 // GET /api/subservices
 export async function GET() {
   try {
@@ -14,6 +14,7 @@ export async function GET() {
       { error: 'Failed to fetch services' },
       { status: 500 }
     )
+    console.log(error)
   }
 }
 
@@ -38,8 +39,8 @@ export async function POST(request: Request) {
     await newService.save();
     
     return NextResponse.json({success: true, message: 'subService created successfully'})
-  } catch (error: any) {
-    if (error.name === 'ValidationError') {
+  } catch (error) {
+    if (error instanceof MongooseError.ValidationError) {
       return NextResponse.json(
         { error: error.message },
         { status: 400 }

@@ -151,7 +151,7 @@ const CartPage = () => {
               Your cart is empty
             </h2>
             <p className="text-gray-500 mb-8">
-              Looks like you haven't added anything to your cart yet.
+              Looks like you haven&apos;t added anything to your cart yet.
             </p>
             <button className="bg-black text-white px-8 py-3 rounded-lg hover:bg-slate-900 transition-colors" onClick={() => router.push("/services")}>
               Continue Shopping

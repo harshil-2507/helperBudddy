@@ -825,10 +825,11 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion"
-import { Sparkles, Circle, ArrowDown } from "lucide-react"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
+import { Sparkles, ArrowDown } from "lucide-react"
 import Link from "next/link"
 import Navbar from "../(components)/ui/Navbar"
+import Image from 'next/image'
 
 const BlogList = () => {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -839,10 +840,10 @@ const BlogList = () => {
   const blogRef = useRef<HTMLDivElement>(null)
 
   // Parallax and scroll effects
-  const y = useSpring(useTransform(scrollY, [0, 1000], [0, 400]), {
-    stiffness: 100,
-    damping: 30,
-  })
+  // const y = useSpring(useTransform(scrollY, [0, 1000], [0, 400]), {
+  //   stiffness: 100,
+  //   damping: 30,
+  // })
 
   const opacity = useTransform(scrollY, [0, 300], [1, 0])
   const scale = useTransform(scrollY, [0, 300], [1, 0.8])
@@ -856,6 +857,7 @@ const BlogList = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
+  console.log(cursorVariant);
   const blogs = [
     {
       id: 1,
@@ -866,10 +868,7 @@ const BlogList = () => {
       readTime: "5 min read",
       category: "Technology",
       color: "#FF6B6B",
-<<<<<<< HEAD
       image: "/asserts/blog1.webp"
-=======
->>>>>>> refs/remotes/origin/main
     },
     {
       id: 2,
@@ -880,7 +879,6 @@ const BlogList = () => {
       readTime: "7 min read",
       category: "Design",
       color: "#4ECDC4",
-<<<<<<< HEAD
       image: "/asserts/blog2.webp"
     },
     {
@@ -906,24 +904,20 @@ const BlogList = () => {
       image: "/asserts/minimalist.jpg"
     }
   ];
-=======
-    },
-  ]
->>>>>>> refs/remotes/origin/main
 
   // Custom cursor animations
-  const variants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      scale: 1,
-    },
-    text: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      scale: 1.5,
-    },
-  }
+  // const variants = {
+  //   default: {
+  //     x: mousePosition.x - 16,
+  //     y: mousePosition.y - 16,
+  //     scale: 1,
+  //   },
+  //   text: {
+  //     x: mousePosition.x - 16,
+  //     y: mousePosition.y - 16,
+  //     scale: 1.5,
+  //   },
+  // }
 
   const scrollToBlogs = () => {
     blogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -1081,21 +1075,18 @@ const BlogList = () => {
                     <div className="h-full rounded-2xl border border-white/10 hover:border-white/30 p-6 transition-all duration-500 hover:bg-white/5">
                       <div className="aspect-video rounded-xl mb-6 overflow-hidden relative">
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10" />
-<<<<<<< HEAD
                         <motion.div
                           whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.6 }}
                           className="h-full"
                         >
-                          <img
-                            src= {blog.image}
-                            alt={blog.title}
-                            className="w-full h-full object-cover"
-                          />
-=======
-                        <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.6 }} className="h-full">
-                          <img src="/api/placeholder/600/400" alt={blog.title} className="w-full h-full object-cover" />
->>>>>>> refs/remotes/origin/main
+                          <Image
+      src={blog.image}
+      alt={blog.title}
+      fill
+      className="object-cover"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
                         </motion.div>
                         <Sparkles
                           className="absolute top-4 right-4 z-20 text-white/70 group-hover:text-white transition-colors duration-300"
@@ -1117,20 +1108,15 @@ const BlogList = () => {
                           {blog.excerpt}
                         </p>
 
-<<<<<<< HEAD
                         <div className="flex items-center gap-4 pt-4 border-t border-black/10">
                           <div className="w-10 h-10 rounded-full bg-black/10 overflow-hidden">
-                            <img 
-                              src="/asserts/blog2.webp" 
-=======
-                        <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                          <div className="w-10 h-10 rounded-full bg-white/10 overflow-hidden">
-                            <img
-                              src="/api/placeholder/40/40"
->>>>>>> refs/remotes/origin/main
-                              alt={blog.author}
-                              className="w-full h-full object-cover"
-                            />
+                          <Image
+    src="/asserts/blog2.webp"
+    alt={blog.author}
+    fill
+    className="object-cover"
+    sizes="40px"
+  />
                           </div>
                           <div>
                             <p className="font-medium text-white/90">{blog.author}</p>

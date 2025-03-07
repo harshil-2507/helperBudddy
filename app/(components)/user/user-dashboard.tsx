@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Bell, Search } from "lucide-react"
 import { dummyUser, dummyOrders, dummyRecommendations } from "./dummy-data"
+import Referral from "../Referral";
 
 export function UserDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -64,6 +65,7 @@ export function UserDashboard() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <UserInfo user={dummyUser} className="lg:col-span-2 shadow-lg border-0" />
             <AiAssistant className="shadow-lg border-0" />
+            <Referral user={dummyUser}/>
             <UserOrders orders={dummyOrders} className="lg:col-span-2 shadow-lg border-0" />
             <UserRecommendations recommendations={dummyRecommendations} className="lg:col-span-3 shadow-lg border-0" />
           </div>
