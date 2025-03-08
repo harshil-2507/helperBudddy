@@ -94,7 +94,7 @@ interface Service {
   searchCount: number;
 }
 
-interface NonAvailableServicesProps {
+interface NonAvailableServicesProps  {
   services?: Service[];
 }
 
@@ -270,4 +270,4 @@ const NonAvailableServices: React.FC<NonAvailableServicesProps> = ({ services: i
   );
 };
 
-export default NonAvailableServices;
+export default NonAvailableServices as unknown as React.ComponentType;

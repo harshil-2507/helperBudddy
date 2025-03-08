@@ -5,6 +5,15 @@ import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
+// import Razorpay from "razorpay";
+
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
+
 
 const CartPage = () => {
   const router = useRouter();
@@ -81,7 +90,7 @@ const CartPage = () => {
             description: "Test Transaction",
             image: "https://example.com/your_logo", // Replace with your logo URL
             order_id: razorpayData.order.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            handler: function (response) {
+            handler: function (response: { razorpay_payment_id: RazorpayResponse; }) {
               alert(`Payment successful: ${response.razorpay_payment_id}`);
               clearCart();
               router.push("/cart/success");
@@ -99,7 +108,7 @@ const CartPage = () => {
             },
           };
 
-          const rzp = new Razorpay(options);
+          const rzp = new window.Razorpay(options);
           rzp.open();
         } else {
           alert(data.message || "Checkout failed. Please try again.");
@@ -240,7 +249,7 @@ const CartPage = () => {
                     <span>Total</span>
                     <span>₹{totalPrice.toFixed(2)}</span>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors" onClick={handleCheckout}>
+                  <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-black transition-colors" onClick={handleCheckout}>
                     Proceed to Checkout
                   </button>
                 </div>
