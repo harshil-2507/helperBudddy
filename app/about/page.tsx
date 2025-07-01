@@ -1,6 +1,6 @@
 
 // "use client";
-
+//
 // import { useState, useEffect, useRef } from "react";
 // import { motion, useAnimation, useInView } from "framer-motion";
 // import { ShoppingCart, Users, Star, Clock, Instagram, Facebook, Twitter, Linkedin, Phone, Mail, MapPin, Zap } from "lucide-react";
