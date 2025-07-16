@@ -1,5 +1,5 @@
 // "use client"
-
+//testing copy 1
 // import React, { useState } from 'react';
 // import { Menu, X, ShoppingCart, User } from 'lucide-react';
 // import Image from 'next/image';
@@ -145,9 +145,9 @@ interface ICartItem {
   price: number;
 }
 
-interface CartItem extends ICartItem {}
+// interface CartItem extends ICartItem {}
 
-const MiniCart = ({ items, total }: { items: CartItem[]; total: number }) => {
+const MiniCart = ({ items, total }: { items: ICartItem[]; total: number }) => {
   const { removeFromCart } = useContext(CartContext) || {};
 
   return (
@@ -194,7 +194,7 @@ const MiniCart = ({ items, total }: { items: CartItem[]; total: number }) => {
             </div>
             <Link 
               href="/cart"
-              className="block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="block w-full bg-black text-white text-center py-2 rounded-lg hover:bg-black transition-colors"
             >
               View Cart
             </Link>

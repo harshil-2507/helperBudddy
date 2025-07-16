@@ -30,6 +30,7 @@ export default function LoginForm() {
         setError(data.message || 'Invalid credentials');
       }
     } catch (err) {
+      console.error(err);
       setError('An error occurred. Please try again.');
     }
   };

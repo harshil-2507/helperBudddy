@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { connect } from "@/lib/mongodb"
 import Service from "@/app/models/services"
-
+import { Error as MongooseError } from 'mongoose'
 
 export async function GET(
   request: Request,
@@ -59,8 +59,8 @@ export async function PATCH(
       }
       await updatedUser.save()
       return NextResponse.json(updatedUser)
-    } catch (error: any) {
-      if (error.name === 'ValidationError') {
+    } catch (error){
+      if (error instanceof MongooseError.ValidationError) {
         return NextResponse.json(
           { error: error.message },
           { status: 400 }

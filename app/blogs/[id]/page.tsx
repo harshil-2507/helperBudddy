@@ -3,8 +3,8 @@
 'use client';
 import { Suspense, use, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Share2, Bookmark, CheckCircle } from 'lucide-react';
-import { set } from 'mongoose';
+import { ArrowLeft, Share2, CheckCircle } from 'lucide-react';
+import Image from 'next/image';
 
 function BlogContent({ id }: { id: string }) {
   // In a real app, you'd fetch this data based on the ID
@@ -47,10 +47,13 @@ function BlogContent({ id }: { id: string }) {
 
       {/* Featured Image */}
       <div className="aspect-video bg-gray-100 mb-12 rounded-lg overflow-hidden">
-        <img
+      <Image
           src={`/api/placeholder/1200/675`}
-          alt="Featured"
-          className="w-full h-full object-cover"
+          alt="Featured blog image"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+          priority
         />
       </div>
 
@@ -80,7 +83,7 @@ function BlogContent({ id }: { id: string }) {
 export default function BlogPost({ params }: { params: Promise<{ id: string }> }) {
 
   const [shared, setShared] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
+  // const [bookmarked, setBookmarked] = useState(false);
   const { id } = use(params);
   
   function handleShare(event: React.MouseEvent<HTMLButtonElement>): void {

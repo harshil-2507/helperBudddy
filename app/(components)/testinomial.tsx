@@ -207,7 +207,7 @@ const AnimatedTestimonials = () => {
     // Animation with camera motion
     const clock = new THREE.Clock();
     let frame = 0;
-
+    console.log('frame', frame);
     const animate = () => {
       frame++;
       const elapsedTime = clock.getElapsedTime();

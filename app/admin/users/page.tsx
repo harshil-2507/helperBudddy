@@ -265,7 +265,7 @@ export default function UsersPage() {
       <Dialog open={isUserDialogOpen} onOpenChange={setIsUserDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{selectedUser?.fullName}'s Services</DialogTitle>
+            <DialogTitle>{selectedUser?.fullName}&apos;s Services</DialogTitle>
           </DialogHeader>
           {isLoading ? (
             <div className="flex justify-center items-center h-32">
@@ -296,14 +296,14 @@ export default function UsersPage() {
                         <div className="flex gap-2">
                           {service.images.map((image, index) => (
                             <div key={index} className="relative w-16 h-16">
-                              <img
-                                src={image}
-                                alt={`${service.name} image ${index + 1}`}
-                                fill
-                                className="object-cover rounded-md cursor-pointer hover:opacity-80"
-                                onClick={() => window.open(image, "_blank")}
-                                sizes="(max-width: 64px) 100vw, 64px"
-                              />
+                              <Image
+            src={image}
+            alt={`${service.name} image ${index + 1}`}
+            fill
+            className="object-cover rounded-md cursor-pointer hover:opacity-80"
+            onClick={() => window.open(image, "_blank")}
+            sizes="(max-width: 64px) 100vw, 64px"
+          />
                             </div>
                           ))}
                         </div>

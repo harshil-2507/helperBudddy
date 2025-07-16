@@ -3,7 +3,7 @@
 import { Canvas, useFrame } from "@react-three/fiber"
 import { useRef } from "react"
 import type { Mesh } from "three"
-import { Environment, Float, PerspectiveCamera, MeshDistortMaterial } from "@react-three/drei"
+import { Environment, Float, PerspectiveCamera } from "@react-three/drei"
 
 function MovingSpheres() {
   const sphere1 = useRef<Mesh>(null)

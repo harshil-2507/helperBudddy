@@ -82,6 +82,7 @@ export default function VerifyOTPForm({ email, referralCode }: VerifyOTPFormProp
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
+      console.log(err);
     }
   };
 
@@ -96,7 +97,7 @@ export default function VerifyOTPForm({ email, referralCode }: VerifyOTPFormProp
 
       {success && <p className="text-green-500">OTP verified successfully!</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 text-black">
         <div className="flex justify-between">
           {otp.map((digit, index) => (
             <input

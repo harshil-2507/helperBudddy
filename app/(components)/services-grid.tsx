@@ -31,41 +31,41 @@ const services = [
   {
     id: 3,
     title: "AC & Appliance Repair",
-    icon: "/placeholder.svg?height=100&width=100",
+    icon: "/asserts/ac.webp",
     subServices: [
-      { title: "AC Service & Repair", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Refrigerator Repair", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Washing Machine Repair", icon: "/placeholder.svg?height=80&width=80" },
+      { title: "AC Service & Repair", icon: "/asserts/ac.webp" },
+      { title: "Refrigerator Repair", icon: "/asserts/refrigerator.jpg" },
+      { title: "Washing Machine Repair", icon: "/asserts/washingmachine.jpg" },
     ],
   },
   {
     id: 4,
     title: "Cleaning",
-    icon: "/placeholder.svg?height=100&width=100",
+    icon: "/asserts/cleaning_homepage.jpg",
     subServices: [
-      { title: "Bathroom & kitchen cleaning", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Full Home Cleaning", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Sofa & Carpet Cleaning", icon: "/placeholder.svg?height=80&width=80" },
+      { title: "Bathroom & kitchen cleaning", icon: "/asserts/bathroom and kitchen.jpg" },
+      { title: "Full Home Cleaning", icon: "/asserts/fullhome.jpg" },
+      { title: "Sofa & Carpet Cleaning", icon: "/asserts/sofa and carpet.webp" },
     ],
   },
   {
     id: 5,
     title: "Electrician, Plumber & Carpenter",
-    icon: "/placeholder.svg?height=100&width=100",
+    icon: "/asserts/elec,plum,carp.webp",
     subServices: [
-      { title: "Electrical Repairs", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Plumbing Services", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Carpentry Work", icon: "/placeholder.svg?height=80&width=80" },
+      { title: "Electrical Repairs", icon: "/asserts/electrical.jpg" },
+      { title: "Plumbing Services", icon: "/asserts/plumber.webp" },
+      { title: "Carpentry Work", icon: "/asserts/carenter.jpg" },
     ],
   },
   {
     id: 6,
     title: "Native Water Purifier",
-    icon: "/placeholder.svg?height=100&width=100",
+    icon: "/asserts/watermain.webp",
     subServices: [
-      { title: "Installation", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Repair", icon: "/placeholder.svg?height=80&width=80" },
-      { title: "Maintenance", icon: "/placeholder.svg?height=80&width=80" },
+      { title: "Installation", icon: "/asserts/waterservice.webp" },
+      { title: "Repair", icon: "/asserts/water services.jpg" },
+      { title: "Maintenance", icon: "/asserts/watermain.webp" },
     ],
   },
   // {
@@ -105,7 +105,7 @@ export default function ServicesGrid() {
             onClick={() => setSelectedService(service)}
             className="flex flex-col items-center rounded-lg bg-gray-50 p-6 text-center transition-all hover:bg-gray-100"
           >
-            <div className="relative h-24 w-24 mb-4">
+            <div className="relative h-40 w-40 mb-4">
               <Image src={service.icon || "/placeholder.svg"} alt={service.title} fill className="object-contain" />
             </div>
             <h4 className="text-sm font-medium">{service.title}</h4>
@@ -127,7 +127,7 @@ export default function ServicesGrid() {
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             {selectedService?.subServices.map((subService, index) => (
               <div key={index} className="flex flex-col items-center rounded-lg bg-gray-50 p-4 text-center">
-                <div className="relative h-16 w-16 mb-2">
+                <div className="relative h-24 w-32 mb-2">
                   <Image
                     src={subService.icon || "/placeholder.svg"}
                     alt={subService.title}

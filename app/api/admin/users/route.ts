@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { connect } from '@/lib/mongodb'
 import Worker from '@/app/models/Worker'
-
+import { Error as MongooseError } from 'mongoose'
 export async function GET(){
     try{
         await connect()
@@ -12,6 +12,7 @@ export async function GET(){
             { error: 'Failed to fetch users' },
             { status: 500 }
           )
+          console.log(error);
     }
 }
 
@@ -36,11 +37,11 @@ export async function POST(request: Request) {
       await newUser.save()
   
       return NextResponse.json({ success: true, message: 'Worker created successfully' })
-    } catch (error: any) {
+    } catch (error) {
       console.error('API Error:', error) // Log the error
-      console.log('Error Message:', error.message)
+      // console.log('Error Message:', error.message)
   
-      if (error.name === 'ValidationError') {
+      if (error instanceof MongooseError.ValidationError) {
         return NextResponse.json(
           { error: error.message },
           { status: 400 }

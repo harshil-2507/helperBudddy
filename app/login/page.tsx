@@ -6,9 +6,9 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { Button } from "@/app/(components)/ui/button";
 import { Input } from "@/app/(components)/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { CircleDot, Sparkles, Workflow } from "lucide-react";
+import { CircleDot, Sparkles } from "lucide-react";
 import ForgotPasswordForm from "@/components/ForgotPasswordForm";
 
 export default function LoginPage() {
@@ -61,6 +61,7 @@ export default function LoginPage() {
         setError(data.message || "Invalid credentials");
       }
     } catch (err) {
+      console.log(err)
       setError("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);

@@ -8,7 +8,12 @@ import { AiAssistant } from "./ai-assistant"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Bell, Search } from "lucide-react"
+<<<<<<< HEAD
 import { dummyOrders, dummyRecommendations } from "./dummy-data"
+=======
+import { dummyUser, dummyOrders, dummyRecommendations } from "./dummy-data"
+import Referral from "../Referral";
+>>>>>>> 01e38ddeaf3f2bdf514fd1868ecd9e0739127a75
 
 // Define the User interface to match your actual MongoDB model
 interface User {
@@ -96,6 +101,7 @@ export function UserDashboard({ user, orders, recommendations }: UserDashboardPr
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <UserInfo user={user} className="lg:col-span-2 shadow-lg border-0" />
             <AiAssistant className="shadow-lg border-0" />
+<<<<<<< HEAD
             <UserOrders 
               orders={orders || dummyOrders} 
               className="lg:col-span-2 shadow-lg border-0" 
@@ -104,6 +110,11 @@ export function UserDashboard({ user, orders, recommendations }: UserDashboardPr
               recommendations={recommendations || dummyRecommendations} 
               className="lg:col-span-3 shadow-lg border-0" 
             />
+=======
+            <Referral user={dummyUser}/>
+            <UserOrders orders={dummyOrders} className="lg:col-span-2 shadow-lg border-0" />
+            <UserRecommendations recommendations={dummyRecommendations} className="lg:col-span-3 shadow-lg border-0" />
+>>>>>>> 01e38ddeaf3f2bdf514fd1868ecd9e0739127a75
           </div>
         </main>
       </div>

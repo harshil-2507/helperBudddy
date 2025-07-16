@@ -17,6 +17,8 @@ export async function GET(request: Request, { params }: { params: { userId: stri
     console.log(user);
     return NextResponse.json(user)
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    
   }
 }

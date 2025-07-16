@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server'
 import {connect} from '@/lib/mongodb'
 import subService from '@/app/models/subservices'
+import { Error as MongooseError } from 'mongoose'
+
 
 // PATCH /api/services/[id]
 export async function PATCH(
@@ -26,8 +28,8 @@ export async function PATCH(
     }
     
     return NextResponse.json(updatedService)
-  } catch (error: any) {
-    if (error.name === 'ValidationError') {
+  } catch (error) {
+    if (error instanceof MongooseError.ValidationError) {
       return NextResponse.json(
         { error: error.message },
         { status: 400 }
@@ -48,7 +50,7 @@ export async function DELETE(
   try {
     await connect()
     const deletedService = await subService.findByIdAndDelete(params.id)
-    
+    console.log(request)
     if (!deletedService) {
       return NextResponse.json(
         { error: 'subService not found' },
@@ -61,6 +63,8 @@ export async function DELETE(
     return NextResponse.json(
       { error: 'Failed to delete service' },
       { status: 500 }
+      
     )
+    console.log(error)
   }
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import {connect} from '@/lib/mongodb'
 import Worker from '@/app/models/Worker'
-
+import { Error as MongooseError } from 'mongoose'
 export async function PATCH(
     request: Request,
     { params }: { params: { id: string } }
@@ -24,8 +24,8 @@ export async function PATCH(
       }
   
       return NextResponse.json(updatedUser)
-    } catch (error: any) {
-      if (error.name === 'ValidationError') {
+    } catch (error) {
+      if (error instanceof MongooseError.ValidationError) {
         return NextResponse.json(
           { error: error.message },
           { status: 400 }
@@ -58,5 +58,6 @@ export async function DELETE(
       { error: 'Failed to delete service' },
       { status: 500 }
     )
+    console.log(error);
   }
 }

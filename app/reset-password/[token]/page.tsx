@@ -32,6 +32,7 @@ export default function ResetPasswordPage({ params }: { params: { token: string 
         setError(data.message || 'An error occurred. Please try again.');
       }
     } catch (err) {
+      console.log(err);
       setError('An error occurred. Please try again.');
     }
   };

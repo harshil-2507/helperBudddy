@@ -12,11 +12,14 @@ interface Service {
   name: string
   category: string
   price: number
+  duration: number
+  description: string
+  image: string
 }
 
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([])
-  const [newService, setNewService] = useState<Omit<Service, "_id">>({ name: "", category: "", price: 0 })
+  const [newService, setNewService] = useState<Omit<Service, "_id">>({ name: "", category: "", price: 0, duration: 0, description: "", image: "" })
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
@@ -32,6 +35,7 @@ export default function ServicesPage() {
       setServices(data)
     } catch (error) {
       alert("Failed to fetch services")
+      console.log(error)
     }
   }
 
@@ -50,11 +54,12 @@ export default function ServicesPage() {
       }
 
       await fetchServices()
-      setNewService({ name: "", category: "", price: 0 })
+      setNewService({ name: "", category: "", price: 0, duration: 0, description: "", image: "" })
       setIsAddDialogOpen(false)
       alert("Service added successfully")
     } catch (error) {
       alert("Failed to add service")
+      console.log(error)
     }
   }
 
@@ -84,6 +89,7 @@ export default function ServicesPage() {
       alert("Service updated successfully")
     } catch (error) {
       alert("Failed to update service")
+      console.log(error)
     }
   }
 
@@ -105,6 +111,7 @@ export default function ServicesPage() {
       alert("Service deleted successfully")
     } catch (error) {
       alert("Failed to delete service")
+      console.log(error)
     }
   }
 
@@ -151,6 +158,40 @@ export default function ServicesPage() {
                 type="number"
                 value={newService.price}
                 onChange={(e) => setNewService({ ...newService, price: Number(e.target.value) })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="duration" className="text-right">
+                Duration
+              </Label>
+              <Input
+                id="duration"
+                type="number"
+                value={newService.duration}
+                onChange={(e) => setNewService({ ...newService, duration: Number(e.target.value) })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-right">
+                Description
+              </Label>
+              <Input
+                id="description"
+                value={newService.description}
+                onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="image" className="text-right">
+                Image
+              </Label>
+              <Input
+                id="image"
+                value={newService.image}
+                onChange={(e) => setNewService({ ...newService, image: e.target.value })}
                 className="col-span-3"
               />
             </div>

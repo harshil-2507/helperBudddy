@@ -23,11 +23,17 @@ export function initCursorEffect() {
     resizeCanvas();
     
     // Get context
-    const ctx = canvas.getContext('2d');
-    
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;    
     // Particle class
     class Particle {
-      constructor(x, y) {
+      private x: number;
+  private y: number;
+  private size: number;
+  private speedX: number;
+  private speedY: number;
+  private life: number;
+  private color: string;
+      constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
         this.size = Math.random() * 5 + 1;
@@ -35,6 +41,10 @@ export function initCursorEffect() {
         this.speedY = Math.random() * 3 - 1.5;
         this.life = 100;
         this.color = this.getRandomColor();
+      }
+
+      public isDead(): boolean {
+        return this.life <= 0;
       }
       
       getRandomColor() {
@@ -63,13 +73,13 @@ export function initCursorEffect() {
     }
     
     // Initialize particles array
-    let particles = [];
+    const particles: Particle[] = [];
     let mouseX = 0;
     let mouseY = 0;
-    let createParticleInterval;
+    let createParticleInterval: NodeJS.Timeout;
     
     // Mouse move event
-    const onMouseMove = (e) => {
+    const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       
@@ -104,7 +114,7 @@ export function initCursorEffect() {
         particles[i].draw();
         
         // Remove dead particles
-        if (particles[i].life <= 0) {
+        if (particles[i].isDead()) {
           particles.splice(i, 1);
           i--;
         }

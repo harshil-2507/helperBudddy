@@ -860,8 +860,8 @@ import { useEffect, useState, useContext, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { CartContext } from "@/context/CartContext"
-import { Search, ShoppingCart } from "lucide-react"
-import Link from "next/link"
+import { Search } from "lucide-react"
+// import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 
 import { Input } from "@/components/ui/input"
@@ -1075,7 +1075,7 @@ const ServicesPage = () => {
               <NotFoundIcon />
               <h3 className="text-xl font-semibold text-gray-300 mb-2">Oops! Service Not Found</h3>
               <p className="text-gray-400 mb-4">
-                Sorry, we don't offer that service yet. We're working on making this service available soon!
+                Sorry, we don&apos;t offer that service yet. We&apos;re working on making this service available soon!
               </p>
             </motion.div>
           )}
@@ -1096,7 +1096,7 @@ const ServicesPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="p-6 border rounded-lg bg-white text-black shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                className="p-6 border rounded-lg bg-gray-200 text-black shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div
                   className="relative w-full h-48 mb-4 overflow-hidden rounded-md"

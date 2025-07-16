@@ -533,7 +533,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Facebook, Instagram, Linkedin, Twitter, Send, Map, Phone, Mail, ArrowRight, Link } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Twitter, Send, Map, Phone, Mail, ArrowRight } from 'lucide-react';
 import Navbar from '../(components)/ui/Navbar';
 
 const ContactPage = () => {
@@ -591,7 +591,7 @@ const ContactPage = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              Let's Connect
+              Let&apos;s Connect
             </motion.h1>
             <motion.p
               className="text-xl text-gray-300 max-w-2xl mx-auto"
@@ -599,7 +599,7 @@ const ContactPage = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              Ready to transform your space? We're here to help with any questions about our cleaning services.
+              Ready to transform your space? We&apos;re here to help with any questions about our cleaning services.
             </motion.p>
           </div>
         </motion.div>
@@ -777,7 +777,7 @@ const ContactPage = () => {
                       <Send className="w-8 h-8 text-green-500" />
                     </motion.div>
                     <h3 className="text-2xl font-bold mb-2 text-white">Message Sent!</h3>
-                    <p className="text-gray-300 mb-6">We'll get back to you as soon as possible.</p>
+                    <p className="text-gray-300 mb-6">We&apos;ll get back to you as soon as possible.</p>
                     <motion.button
                       onClick={() => {
                         setFormStep(0);

@@ -53,6 +53,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/bcryptjs": "^2.4.6",
+    "@types/howler": "^2.2.12",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^20",
