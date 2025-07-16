@@ -62,25 +62,12 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex bg-black text-white relative">
-<<<<<<< HEAD
       <img src="/grid-pattern.svg" alt="Grid Pattern" className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-20 " />
       {/* /replace img wiht next/image Image to insert gridpattern image in left side*/}
       {/* Left Part - Exact Copy */}
       <div className="w-1/2 h-screen flex flex-col justify-center items-center relative z-10 text-center">
         <div className="absolute inset-0 flex justify-center items-center overflow-hidden">
           {/* <Globe /> */}
-=======
-<Image 
-        src="/grid-pattern.svg" 
-        alt="Grid Pattern" 
-        fill
-        priority
-        className="object-cover z-0 opacity-20"
-      />      {/* Left Part - Exact Copy */}
-      <div className="w-1/2 h-screen flex flex-col justify-center items-center relative z-10 text-center">
-        <div className="absolute inset-0 flex justify-center items-center overflow-hidden">
-        <SplineViewer></SplineViewer>
->>>>>>> 01e38ddeaf3f2bdf514fd1868ecd9e0739127a75
         </div>
         <h1 className="text-4xl font-mono text-gradient z-10 mt-16">Connect with HelperBuddy Community</h1>
       </div>
