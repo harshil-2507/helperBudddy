@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    const resetToken = crypto.randomBytes(20).toString('hex');
+    const resetToken = crypto.randomBytes(20).toString('hex');//new token
     const resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
     user.resetPasswordToken = resetToken;

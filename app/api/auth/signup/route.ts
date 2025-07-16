@@ -9,16 +9,21 @@ export async function POST(request: Request) {
   const { username, email, password, area } = await request.json();
 
   try {
-    await connectDB();
+    await connectDB();//before any queries connecttour datbase first and return a void promise(see dbConnects.ts for more deteils)
 
-    const existingUser = await User.findOne({ email });
+
+    
+    const existingUser = await User.findOne({ email });//if already with same email or key:usrname existed then it returns user already existed
     if (existingUser) return NextResponse.json({ message: 'User already exists' }, { status: 400 });
 
-    const otp = crypto.randomBytes(3).toString('hex').toUpperCase();
-    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
+    //logic of otp and refrral generation using crypto
+    const otp = crypto.randomBytes(3).toString('hex').toUpperCase();
+    // new Date() is a js date object
+    const otpExpires = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes(unit is microseconds)
     // Generate a unique referral code
-    const referralCodeGenerated = crypto.randomBytes(10).toString('hex').toUpperCase();
+
+    const referralCodeGenerated = crypto.randomBytes(10).toString('hex').toUpperCase();//20 character hex ref code
 
     // Create user with plain text password; pre-save hook will hash it
     const user = new User({
@@ -31,9 +36,9 @@ export async function POST(request: Request) {
       walletCoins: 20, // Initial wallet coins
       referralCode: referralCodeGenerated,
     });
-    await user.save();
+    await user.save();//presave bcryptjs based hashing hook executed then saved into user collection
 
-    // Send OTP email
+    // Send OTP email using nodmeailer for it
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

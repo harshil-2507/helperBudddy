@@ -13,12 +13,13 @@ export async function POST(request: Request) {
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() },
-    });
+    });//logic is to find user by that token that is being said to the mail
 
     if (!user) {
       return NextResponse.json({ message: 'Password reset token is invalid or has expired' }, { status: 400 });
     }
-
+    //and if user found just updated the info as below
+    
     const hashedPassword = password;
 
     user.password = hashedPassword;

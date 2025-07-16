@@ -26,7 +26,7 @@ export default function LoginPage() {
         const parentRect = parentRef.current?.getBoundingClientRect();
         const top = `${Math.random() * (parentRect?.height || 0 - 100) + 50}px`;
         const left = `${Math.random() * (parentRect?.width || 0 - 100) + 50}px`;
-        const colors = ["text-green-500", "blue-500", "text-red-500", "text-yellow-500", "text-purple-500"];
+        const colors = ["text-white-100"];
         const color = colors[Math.floor(Math.random() * colors.length)];
         return { top, left, color };
       });
@@ -55,7 +55,7 @@ export default function LoginPage() {
         Cookies.set("token", data.token, { expires: 1 });
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data._id);
-        router.push(`/user/${data._id}`);
+        router.push(`/user/${data._id}`);//can update this to username if we want to get url beutiful like {baseurl}/user/username , data permits which attributes?? means is it contain username?? may be Yesss.. see User model
       } else {
         console.log(data);
         setError(data.message || "Invalid credentials");
@@ -72,14 +72,14 @@ export default function LoginPage() {
     const parentRect = parentRef.current.getBoundingClientRect();
     const top = `${Math.random() * (parentRect.height - 100)}px`;
     const left = `${Math.random() * (parentRect.width - 100)}px`;
-    const colors = ["text-green-500", "text-blue-500", "text-red-500", "text-yellow-500", "text-purple-500"];
+    const colors = ["text-white"];
     const color = colors[Math.floor(Math.random() * colors.length)];
     return { top, left, color };
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-gray-900 to-gray-800">
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-black/20">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-white  via-slate-500 to-black">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-black/45">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative w-full h-full" ref={parentRef}>
             {randomPositions.map((pos, i) => (
@@ -118,7 +118,7 @@ export default function LoginPage() {
           >
             <div className="flex items-center space-x-3">
               <Sparkles className="h-8 w-8 text-green-400" />
-              <h1 className="text-4xl font-bold">CapitalCompass</h1>
+              <h1 className="text-4xl font-bold">HelperBuddy</h1>
             </div>
           </motion.div>
         </div>
@@ -131,14 +131,16 @@ export default function LoginPage() {
           transition={{ duration: 0.8 }}
           className="w-full max-w-md"
         >
-          <div className="bg-white/10 backdrop-blur-xl p-8 rounded-2xl shadow-2xl">
-            <div className="mb-8 text-center">
-              <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-              <p className="text-gray-400">Login to access your dashboard</p>
-            </div>
+          <div className="bg-slate-100/15 backdrop-blur-xl p-8 rounded-2xl shadow-2xl">
+            
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
             {!showForgotPassword ? (
-              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                    <div className="mb-8 text-center">
+                  <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+                  <p className="text-gray-200">Login to access your dashboard</p>
+                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
                 <Input
                   type="email"
                   placeholder="Email"
@@ -159,15 +161,18 @@ export default function LoginPage() {
                   {isLoading ? "Logging in..." : "Log In"}
                 </Button>
               </form>
-            ) : (
-              <ForgotPasswordForm />
-            )}
+  
             <p className="text-center text-gray-400 mt-4">
               New user? <Link href="/signup" className="text-green-400 hover:underline">Sign up here</Link>
             </p>
             <p className="text-center text-gray-400 mt-4">
               Forgot password? <button onClick={() => setShowForgotPassword(true)} className="text-green-400 hover:underline">Reset here</button>
             </p>
+
+              </div>
+            ) : (
+              <ForgotPasswordForm />
+            )}
           </div>
         </motion.div>
       </div>

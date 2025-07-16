@@ -8,9 +8,45 @@ import { AiAssistant } from "./ai-assistant"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Bell, Search } from "lucide-react"
-import { dummyUser, dummyOrders, dummyRecommendations } from "./dummy-data"
+import { dummyOrders, dummyRecommendations } from "./dummy-data"
 
-export function UserDashboard() {
+// Define the User interface to match your actual MongoDB model
+interface User {
+  _id: string;
+  username: string;
+  email: string;
+  area: string;
+  address: string;
+  isVerified: boolean;
+  interestedCategory?: string[];
+  walletCoins: number;
+  referralCode?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  // Note: password, otp, resetPasswordToken are excluded for security
+}
+
+// Define Order interface (you'll need to replace dummyOrders with real data later)
+interface Order {
+  _id: string;
+  userId: string;
+  // Add order properties
+}
+
+// Define Recommendation interface (you'll need to replace dummyRecommendations with real data later)
+interface Recommendation {
+  _id: string;
+  // Add recommendation properties
+}
+
+// Define props interface
+interface UserDashboardProps {
+  user: User;
+  orders?: Order[]; // Optional for now, can be added later
+  recommendations?: Recommendation[]; // Optional for now, can be added later
+}
+
+export function UserDashboard({ user, orders, recommendations }: UserDashboardProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   
   return (
@@ -34,14 +70,6 @@ export function UserDashboard() {
           <div className="container flex h-16 items-center justify-between px-4">
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-              <div className="hidden md:flex items-center gap-2 bg-white/10 rounded-lg px-3 py-1.5 border border-white/20">
-                <Search className="size-4 text-gray-300" />
-                <Input
-                  type="search"
-                  placeholder="Search..."
-                  className="border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-gray-400"
-                />
-              </div>
             </div>
             
             <div className="flex items-center gap-4">
@@ -54,7 +82,11 @@ export function UserDashboard() {
                 variant="ghost"
                 className="size-9 rounded-full bg-gradient-to-br from-gray-400 to-gray-900 text-gray-100 hover:from-gray-300 hover:to-gray-800"
               >
-                <span className="text-lg font-semibold">{dummyUser.username.charAt(0).toUpperCase()}</span>
+                <span className="text-lg font-semibold">
+                  {user.username?.charAt(0).toUpperCase() || 
+                   user.email?.charAt(0).toUpperCase() || 
+                   'U'}
+                </span>
               </Button>
             </div>
           </div>
@@ -62,15 +94,21 @@ export function UserDashboard() {
         
         <main className="flex-1 container relative px-4 py-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <UserInfo user={dummyUser} className="lg:col-span-2 shadow-lg border-0" />
+            <UserInfo user={user} className="lg:col-span-2 shadow-lg border-0" />
             <AiAssistant className="shadow-lg border-0" />
-            <UserOrders orders={dummyOrders} className="lg:col-span-2 shadow-lg border-0" />
-            <UserRecommendations recommendations={dummyRecommendations} className="lg:col-span-3 shadow-lg border-0" />
+            <UserOrders 
+              orders={orders || dummyOrders} 
+              className="lg:col-span-2 shadow-lg border-0" 
+            />
+            <UserRecommendations 
+              recommendations={recommendations || dummyRecommendations} 
+              className="lg:col-span-3 shadow-lg border-0" 
+            />
           </div>
         </main>
       </div>
       
-      <UserSidebar user={dummyUser} open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <UserSidebar user={user} open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </div>
   )
 }

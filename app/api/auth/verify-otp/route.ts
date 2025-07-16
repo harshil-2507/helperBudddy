@@ -7,7 +7,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
   const { email, otp, referralCode }: { email: string; otp: string; referralCode?: string } = await request.json();
-
+//  ? in referralCode means optional
   try {
     await connectDB();
 
@@ -16,9 +16,13 @@ export async function POST(request: Request) {
     if (!user) return NextResponse.json({ message: 'User not found' }, { status: 404 });
 
     // Check OTP validity
-    if (user.otp !== otp || user.otpExpires! < new Date()) {
-      return NextResponse.json({ message: 'Invalid or expired OTP' }, { status: 400 });
+    if (user.otp !== otp) {
+      return NextResponse.json({ message: 'Invalid OTP' }, { status: 400 });
+    }else if(user.otpExpires! < new Date()){
+      return NextResponse.json({ message: 'Your OTP has been Expired.' }, { status: 400 });
     }
+    //additional enhancements we can do for this system
+    //  implement resend functionality as well by let it resent using nodemailer update current otp value by it and interact with frontend.(additional feature live timing counter to send otp as remaing time for better ux)
 
     // Mark user as verified
     user.isVerified = true;
@@ -44,14 +48,21 @@ text: `Dear ${user.username},\n\nCongratulations! You have successfully verified
     
         await transporter.sendMail(mailOptions);
 
+
+
+
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: '1d' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: '1d' }); 
+
+
+
 
     // If referral code is provided, add bonus coins to the referee
     if (referralCode) {
       const referee = await User.findOne({ referralCode });
       if (referee) {
-        referee.walletCoins += 30; // Add bonus coins
+        referee.walletCoins += 100;
+        // addition of bonus coinss here suppose 100
         await referee.save();
       }
     }

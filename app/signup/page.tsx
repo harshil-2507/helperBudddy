@@ -1,6 +1,6 @@
 // app/signup/page.tsx
 'use client';
-
+import Image from 'next/image'
 import { useState } from 'react';
 import Link from 'next/link';
 import Globe from '@/components/threeD/Globe';
@@ -31,17 +31,23 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // prevents the page to reload on the subkission of form
     setError('');
 
     try {
+      //await pauses the execution untill the fetch compltes either sucess or error
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
 
+// all the backend or api role in this part 
+
+
+      const data = await response.json();
+      // if response as been sent through post req then change the usestate setShowOtpForm to true
       if (response.ok) {
         setShowOtpForm(true);
       } else {
@@ -55,10 +61,11 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex bg-black text-white relative">
       <img src="/grid-pattern.svg" alt="Grid Pattern" className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-20 " />
+      {/* /replace img wiht next/image Image to insert gridpattern image in left side*/}
       {/* Left Part - Exact Copy */}
       <div className="w-1/2 h-screen flex flex-col justify-center items-center relative z-10 text-center">
         <div className="absolute inset-0 flex justify-center items-center overflow-hidden">
-          <Globe />
+          {/* <Globe /> */}
         </div>
         <h1 className="text-4xl font-mono text-gradient z-10 mt-16">Connect with HelperBuddy Community</h1>
       </div>
@@ -72,18 +79,34 @@ export default function SignupPage() {
           className="w-full max-w-lg bg-gray-800 bg-opacity-30 backdrop-blur-lg p-10 rounded-3xl shadow-2xl space-y-8"
         >
           <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
-
+ 
           {error && <p className="text-red-400 text-center">{error}</p>}
-
+          {/* if any error exists then show it up hereee  with red colur*/}
+    
           {!showOtpForm ? (
             <form onSubmit={handleSubmit} className="space-y-6">
               <label className="flex items-center space-x-2 bg-gray-700 bg-opacity-40 p-2 rounded-md">
                 <FaUser className="text-white" />
+                {/* Fa is basically the predeclared icons present in index.d.ts */}
                 <input
                   type="text"
                   placeholder="Username"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  // first of all whenever the change occured => e triggers => so we will change the usestate setFormData as above,(which is first initalised entire object as existing formdata object using spread operator and then change the spefically username with current event changes (represented as e.target.value))
+
+                //                   doubt:
+
+                // Why do we write username: e.target.value directly instead of formData.username = e.target.value?
+
+                //  Answer: Because we're not mutating the original object — we're creating a new object.
+                // REASON: React State Must Be Immutable
+                // React expects state updates to be immutable — meaning:
+
+                // You never modify the existing object directly (formData.username = ...) — doing so wouldn't trigger a re-render reliably.
+
+                // Instead, you create a new object where only the changed field is updated.
+
                   required
                   className="bg-transparent focus:outline-none text-white w-full"
                 />
@@ -114,7 +137,7 @@ export default function SignupPage() {
                 value={formData.area}
                 onChange={(e) => setFormData({ ...formData, area: e.target.value })}
                 required
-                className="w-full px-4 py-2 bg-gray-700 bg-opacity-40 rounded-md text-white focus:outline-none"
+                className="w-full px-4 py-2 bg-gray-800 bg-opacity-80 rounded-md text-white focus:outline-none hover:after:color"
               >
                 <option value="">Select Area</option>
                 <option value="Area 1">Area 1</option>
